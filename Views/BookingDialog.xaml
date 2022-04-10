@@ -1,0 +1,36 @@
+﻿<ContentDialog
+    x:Class="BookingApp.Views.BookingDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BookingApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="TITLE"
+    PrimaryButtonText="Zur Buchung"
+    SecondaryButtonText="Abbrechen"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    PrimaryButtonStyle="{StaticResource MyButtonStyle}"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+    SecondaryButtonStyle="{StaticResource MyButtonStyle}">
+    
+
+    <Grid>
+        <StackPanel Padding="20" Spacing="20" Width="500" Height="800">
+
+            <CalendarView CalendarViewDayItemChanging="Calendar_CalendarViewDayItemChanging" x:Name="Calendar" HorizontalAlignment="Stretch" Height="550" SelectedDatesChanged="Calendar_SelectedDatesChanged" >
+                <CalendarView.CalendarItemForeground>
+                    <SolidColorBrush Color="White"></SolidColorBrush>
+                </CalendarView.CalendarItemForeground>
+                <CalendarView.CalendarItemBackground>
+                    <SolidColorBrush Color="LightGreen"></SolidColorBrush>
+                </CalendarView.CalendarItemBackground>
+                <CalendarView.Resources>
+                    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="DarkGreen" />
+                </CalendarView.Resources>
+            </CalendarView>
+            
+            <TextBlock  Name="TboxName" Text="Test" HorizontalAlignment="Stretch" FontSize="24" Foreground="DarkRed" Height="32"></TextBlock>
+        </StackPanel>
+    </Grid>
+</ContentDialog>

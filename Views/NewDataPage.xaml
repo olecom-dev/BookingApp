@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="BookingApp.Views.NewDataPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BookingApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="NewDataPage_Loaded">
+
+    <Grid>
+        <RelativePanel Name="rvNewData">
+            <TextBlock Text="Neues Zimmer / Zimmer bearbeiten" FontSize="24" Margin="30,0,0,0"></TextBlock>
+            <StackPanel Margin="20,60. 0, 0" Padding="10" Orientation="Vertical" Width="400"  BorderBrush="DarkRed" BorderThickness="1">
+                <TextBlock Text="Zimmernummer auswählen"></TextBlock>
+                <ComboBox Name="cboRooms" HorizontalAlignment="Stretch" SelectionChanged="CboRooms_SelectionChanged"></ComboBox>
+                <Image Name="imgRoom"  Grid.Column="0" Grid.Row="0" Source="https://plchldr.co/i/400x280?&amp;bg=83A8C3&amp;fc=000000&amp;text=Bild des Zimmers" HorizontalAlignment="Stretch" Stretch="Fill" Margin="0,30,0,0" ></Image>
+                <Button Name="btnNewPicture" Grid.Column="0" Grid.Row="1" Content="Bild auswählen" HorizontalAlignment="Stretch" Margin="0,10,0,10" Click="BtnNewPicture_Click" Style="{StaticResource MyButtonStyle}"></Button>
+                <TextBlock Text="Zimmernummer:" Grid.Column="0" Grid.Row="2"></TextBlock>
+                <TextBox Name="tbRoomNumber" Grid.Column="0" Grid.Row="3"  HorizontalAlignment="Stretch"></TextBox>
+                <TextBlock Text="Anzahl Betten:" Grid.Column="0" Grid.Row="4"></TextBlock>
+                <TextBox Name="tbNumberOfBeds" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Stretch"></TextBox>
+                <TextBlock Text="Preis pro Nacht:" Grid.Column="0" Grid.Row="6"></TextBlock>
+                <TextBox Name="tbPricePerNight" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="7"></TextBox>
+                <TextBlock Text="Zimmergröße:" Grid.Column="0" Grid.Row="8"></TextBlock>
+                <TextBox Name="tbRoomSize" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="9"></TextBox>
+                <Button Name="btnNewRoom" Content="Neues Zimmer" Margin="0,10,0,0" Click="BtnNewRoom_Click" HorizontalAlignment="Stretch" Style="{StaticResource MyButtonStyle}"></Button>
+                <Button Name="btnSaveRoom" Content="Speichern" Margin="0,10,0,0" Click="BtnSaveRoom_Click" HorizontalAlignment="Stretch" Style="{StaticResource MyButtonStyle}"></Button>
+
+            </StackPanel>
+        </RelativePanel>
+    </Grid>
+</Page>

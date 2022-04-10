@@ -1,0 +1,130 @@
+﻿<Page
+    x:Class="BookingApp.Views.CustomerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BookingApp.Views"
+    xmlns:classes="using:BookingApp.Classes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    
+    
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+   >
+   <Page.Transitions>
+        <TransitionCollection>
+            <EdgeUIThemeTransition Edge="Left">
+            </EdgeUIThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions> 
+
+    <Grid>
+        <ListView Name="CustomerList" 
+                  HorizontalAlignment="Left"
+                  SelectionMode="Single"
+                  SelectionChanged="CustomerList_SelectionChanged"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.IsVerticalRailEnabled="True"
+                  ScrollViewer.VerticalScrollMode="Enabled"
+                  ScrollViewer.HorizontalScrollMode="Enabled"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ScrollViewer.IsHorizontalRailEnabled="True"
+                  Margin="20,450,10,20" Padding="10"
+               
+                      >
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid  Background="DarkRed" >
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="100"  />
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+
+                         
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Margin="15" Foreground="White" FontSize="16" TextAlignment="Center"  VerticalAlignment="Center" Text="ID" Grid.Column="0"  Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        <TextBlock Margin="15" Foreground="White" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" Text="Nachname" Grid.Column="1" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        <TextBlock Margin="15"  Foreground="White" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" Text="Vorname" Grid.Column="2" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        <TextBlock Margin="15"  Foreground="White" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" Text="Adresse" Grid.Column="3" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        <TextBlock Margin="15"  Foreground="White" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" Text="Ort" Grid.Column="4" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        <TextBlock Margin="15"  Foreground="White" FontSize="16" TextAlignment="Center"  VerticalAlignment="Center" Text="PLZ" Grid.Column="5" Style="{ThemeResource CaptionTextBlockStyle}"/>
+            
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate x:Name="TableDataTemplate" x:DataType="classes:Customer" >
+                    <Grid Height="Auto" AutomationProperties.Name="{Binding CustomerID}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding CustomerID}" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
+                        <TextBlock Text="{Binding Lastname}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
+                        <TextBlock Text="{Binding Firstname}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
+                        <TextBlock Text="{Binding Address}" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
+                        <TextBlock Text="{Binding City}" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
+                        <TextBlock Text="{Binding Postalcode}" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
+                        
+
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+        <RelativePanel Margin="10,0,0,0" Name="CustomerPanel">
+            <Grid Padding="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition Width="320"></ColumnDefinition>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition Width="320"> </ColumnDefinition>
+                    
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+ 
+            <TextBlock Text="ID" Grid.Column="0" Margin="10" Grid.Row="0"></TextBlock>
+                <TextBox Name="TboxCustomerID" Margin="10"  Grid.Column="1" Grid.Row="0"></TextBox>
+                <TextBlock Text="Name" Margin="10" Grid.Column="0" Grid.Row="1"></TextBlock>
+                <TextBox Name="TboxLastname" Margin="10" Grid.Column="1" Grid.Row="1"></TextBox>
+                <TextBlock Text="Vorname" Margin="10" Grid.Column="0" Grid.Row="2"></TextBlock>
+                <TextBox Name="TboxFirstname" Margin="10" Grid.Column="1" Grid.Row="2"></TextBox>
+                <TextBlock Text="Adresse" Margin="10" Grid.Column="0" Grid.Row="3"></TextBlock>
+                <TextBox Name="TboxAddress" Margin="10" Grid.Column="1" Grid.Row="3"></TextBox>
+                <TextBlock Text="Ort" Margin="10" Grid.Column="0" Grid.Row="4"></TextBlock>
+                <TextBox Name="TboxCity" Margin="10" Grid.Column="1" Grid.Row="4"></TextBox>
+                <TextBlock Text="PLZ" Margin="10" Grid.Column="0" Grid.Row="5"></TextBlock>
+                <TextBox Name="TboxPostalcode" Margin="10" Grid.Column="1" Grid.Row="5"></TextBox>
+                <TextBlock Text="Land" Margin="10" Grid.Column="0" Grid.Row="6"></TextBlock>
+                <ComboBox Name="CboxCountry" Width="300" Margin="10" Grid.Column="1" Grid.Row="6"></ComboBox>
+                <TextBlock Text="E-Mail" Margin="10" Grid.Column="0" Grid.Row="7"></TextBlock>
+                <TextBox Name="TboxEMailAdress" Margin="10" Grid.Column="1" Grid.Row="7"></TextBox>
+                <TextBlock Text="Geboren am" Margin="10"  Grid.Column="2" Grid.Row="0"></TextBlock>
+                <DatePicker Name="CDPDateOfBirth" Margin="10" Width="300" Grid.Column="3" Grid.Row="0"></DatePicker>
+                <TextBlock Text="Telefon" Margin="10" Grid.Column="2" Grid.Row="1"></TextBlock>
+                <TextBox Name="TboxPhone" Margin="10" Grid.Column="3" Grid.Row="1"></TextBox>
+                <TextBlock Text="Mobil" Margin="10" Grid.Column="2" Grid.Row="2"></TextBlock>
+                <TextBox Name="TboxMobilePhone" Margin="10" Grid.Column="3" Grid.Row="2"></TextBox>
+                <Button Style="{StaticResource MyButtonStyle}" Name="ButtonNew" Margin="10" Width="300" Grid.Column="3" Grid.Row="3" Content="Neuer Kunde" Click="ButtonNew_Click"></Button>
+                <Button Style="{StaticResource MyButtonStyle}" Name="ButtonSave" Margin="10" Width="300" Grid.Column="3" Grid.Row="4" Content="Speichern" Click="ButtonSave_Click"></Button>
+            </Grid>
+        </RelativePanel>
+    </Grid>
+</Page>
