@@ -25,7 +25,7 @@
                 <RowDefinition Height="40" ></RowDefinition>
             </Grid.RowDefinitions>
             <Button Grid.Column="0" Content="Suchen"  Height="40" Width="120" Click="BtnSearch_Click" Style="{StaticResource MyButtonStyle}"></Button>
-            <TextBox Grid.Column="1" Name="tbSearch"  PlaceholderText="Suchen"   Height="40" Width="200"></TextBox>
+            <AutoSuggestBox Grid.Column="1" Name="asbSearch"  PlaceholderText="Suchen..."   Height="40" Width="200" QueryIcon="Find" TextChanged="asbSearch_TextChanged" SuggestionChosen="asbSearch_SuggestionChosen" QuerySubmitted="asbSearch_QuerySubmitted"></AutoSuggestBox>
             <ComboBox  Grid.Column="2" Name="cboxSearch" PlaceholderText="Filter" Width="200" Height="40">
                 <ComboBoxItem Content="Alle"></ComboBoxItem>
                 <ComboBoxItem Content="Zimmernummer"></ComboBoxItem>

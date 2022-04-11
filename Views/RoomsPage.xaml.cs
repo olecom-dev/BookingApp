@@ -28,11 +28,12 @@ namespace BookingApp.Views
     {
         public string ConnectionString = (App.Current as App).ConnectionString;
         private List<Rooms> rooms = new List<Rooms>();
-        private List<Booking> boo = new List<Booking>();
+        private List<Booking> bookings = new List<Booking>();
+        List<Rooms> r = null;
         public RoomsPage()
         {
             this.InitializeComponent();
-            
+         //   asbSearch.ItemsSource = rooms;  
 
             
         }
@@ -51,10 +52,10 @@ namespace BookingApp.Views
             foreach (var item in rooms)
             {
                 // SetAvailability(true, item.RoomNumber);
-                boo.AddRange(GetBookings(item.RoomNumber));
+                bookings.AddRange(GetBookings(item.RoomNumber));
                
             }
-            List<Bookings> b = boo.Select(i => new Bookings { StartDate = i.StartDate, EndDate = i.EndDate, RoomNumber = i.RoomNumber }).ToList();
+            List<Bookings> b = bookings.Select(i => new Bookings { StartDate = i.StartDate, EndDate = i.EndDate, RoomNumber = i.RoomNumber }).ToList();
             {
 
                 foreach (var t in b)
@@ -200,29 +201,29 @@ namespace BookingApp.Views
         }
         private void BtnSearch_Click(object sender,RoutedEventArgs args)
         {
-            List<Rooms> r = null;
+            
          
                 ComboBoxItem cbi = (ComboBoxItem)cboxSearch.SelectedItem;
                 switch (cbi.Content.ToString())
                 {
                     case "Zimmernummer":
                         {
-                            r = rooms.Where(t => t.RoomNumber.Contains(tbSearch.Text)).ToList();
+                            r = rooms.Where(t => t.RoomNumber.Contains(asbSearch.Text)).ToList();
                             break;
                         }
                     case "Anzahl Betten":
                         {
-                            r = rooms.Where(t => t.NumberOfBeds.ToString().Contains(tbSearch.Text)).ToList();
+                            r = rooms.Where(t => t.NumberOfBeds.ToString().Contains(asbSearch.Text)).ToList();
                             break;
                         }
                     case "Zimmergröße":
                         {
-                            r = rooms.Where(t => t.RoomSize.Contains(tbSearch.Text)).ToList();
+                            r = rooms.Where(t => t.RoomSize.Contains(asbSearch.Text)).ToList();
                             break;
                         }
                     case "Preis":
                         {
-                        r = rooms.Where(t => t.PricePerNight.ToString().Contains(tbSearch.Text)).ToList();
+                        r = rooms.Where(t => t.PricePerNight.ToString().Contains(asbSearch.Text)).ToList();
                         break;
                         }
                 case "Buchbar":
@@ -241,9 +242,34 @@ namespace BookingApp.Views
                         break;
                     }
                 }
+           
                 GridView1.ItemsSource = r;
             
             }
+        private void asbSearch_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+
+
+            if (args.CheckCurrent())
+            {
+                var search_term = asbSearch.Text;
+                var results = r.Where(t => t.Equals(search_term)).ToList();
+
+                asbSearch.ItemsSource = results;
+            }
+        }
+        private void asbSearch_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            var search_term = args.QueryText;
+            var results = r.Where(t => t.Equals(search_term)).ToList();
+            asbSearch.ItemsSource = results;
+            asbSearch.IsSuggestionListOpen = true;
+        }
+        private void asbSearch_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            asbSearch.Text = args.SelectedItem as string;
+
+        }
         private void StackPanel_Tapped(object sender, TappedRoutedEventArgs args)
         {
             ((Window.Current.Content as Frame).Content as MainPage).contentFrame.Navigate(typeof(ReservedPage), rooms[GridView1.SelectedIndex].RoomNumber);
