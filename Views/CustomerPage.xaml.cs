@@ -28,7 +28,7 @@ namespace BookingApp.Views
         List<Countries> country = new List<Countries>();
         List<Customer> cus = new List<Customer>();
         public string ConnectionString = (App.Current as App).ConnectionString;
-
+ 
 
         public CustomerPage()
         {
@@ -52,10 +52,13 @@ namespace BookingApp.Views
             this.TboxMobilePhone.Text = cus[0].MobilePhone;
             this.CustomerList.ItemsSource = cus;
             ControlsEnabled(false);
-
+            
+ 
+        
 
 
         }
+
         public List<Customer> GetCustomers(string connectionString)
         {
             const string GetCustomersQuery = "Select CustomerID, Lastname, Firstname, Address, City, Postalcode, Countrycode, E_Mail, DateOfBirth, Phone, MobilePhone from dbo.Customer;";
@@ -69,7 +72,7 @@ namespace BookingApp.Views
                 }
                 catch (Exception eSql)
                 {
-                    MsgBox.Show("Exception: " + eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
 
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
@@ -124,7 +127,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -191,6 +194,7 @@ namespace BookingApp.Views
             }
             return list;
         }
+
         private void ControlsEnabled(bool isEnabled)
         {
             foreach (var textBox in AllTextBoxes(this))
@@ -217,7 +221,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler", eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -239,9 +243,9 @@ namespace BookingApp.Views
                         {
                             cmd.ExecuteNonQuery();
                         }
-                        catch(SqlException exSql)
+                        catch(SqlException eSql)
                         {
-                            MsgBox.Show(exSql.Message);
+                            MessageBox.DisplayDialog("Fehler", eSql.Message);
                         }
                         }
                 }

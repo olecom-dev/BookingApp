@@ -4,15 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
+using Windows.UI.Xaml.Controls;
+using BookingApp;
 
 namespace BookingApp.Classes
 {
     public static class MsgBox
     {
-        static public async void Show(string mytext)
+        public static async void DisplayDialog(string title,string content)
         {
-            var dialog = new MessageDialog(mytext);
-           await dialog.ShowAsync();
+            ContentDialog noDialog = new ContentDialog()
+            {
+                Title = title,
+                Content = content,
+                CloseButtonText = "Ok"
+
+            };
+            await noDialog.ShowAsync();
         }
     }
-}
+    }

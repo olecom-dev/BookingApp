@@ -65,7 +65,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {

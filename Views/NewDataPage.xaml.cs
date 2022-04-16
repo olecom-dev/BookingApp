@@ -88,16 +88,16 @@ namespace BookingApp.Views
                     int count = cmd.ExecuteNonQuery();
                     if (count > 0)
                     {
-                        MsgBox.Show("Daten erfolgreich gespeichert");
+                        MessageBox.DisplayDialog("OK","Daten erfolgreich gespeichert");
                     }
                     else
                     {
-                        MsgBox.Show("Fehler beim einfügen der Daten");
+                        MessageBox.DisplayDialog("Fehler","Fehler beim einfügen der Daten");
                     }
                 }
-                catch (SqlException ex)
+                catch (SqlException eSql)
                 {
-                    MsgBox.Show(ex.Message);
+                    MessageBox.DisplayDialog("Fehler", eSql.Message);
                 }
                 finally
                 {
@@ -106,7 +106,7 @@ namespace BookingApp.Views
             }
             else
             {
-                MsgBox.Show("Alle Felder müssen ausgefüllt werden!");
+                MessageBox.DisplayDialog("Fehler","Alle Felder müssen ausgefüllt werden!");
             }
             
         }
@@ -145,7 +145,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler", eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {

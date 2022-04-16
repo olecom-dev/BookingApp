@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Input;
+using BookingApp.Views;
 
 namespace BookingApp
 {
@@ -53,7 +54,7 @@ namespace BookingApp
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -291,9 +292,9 @@ namespace BookingApp
                     con.Open();
                     command.ExecuteNonQuery();
                 }
-                catch (SqlException esql)
+                catch (SqlException eSql)
                 {
-                    MsgBox.Show(esql.Message);
+                    MessageBox.DisplayDialog("Fehler", eSql.Message);
                 }
                 finally
                 {

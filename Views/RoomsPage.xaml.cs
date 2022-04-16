@@ -105,7 +105,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -121,7 +121,7 @@ namespace BookingApp.Views
                         }
                         catch (SqlException exsql)
                         {
-                            MsgBox.Show(exsql.Message);
+                            MessageBox.DisplayDialog("Fehler",exsql.Message);
                         }
                         finally
                         {
@@ -149,7 +149,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler", eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -246,30 +246,8 @@ namespace BookingApp.Views
                 GridView1.ItemsSource = r;
             
             }
-        private void asbSearch_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-
-
-            if (args.CheckCurrent())
-            {
-                var search_term = asbSearch.Text;
-                var results = r.Where(t => t.Equals(search_term)).ToList();
-
-                asbSearch.ItemsSource = results;
-            }
-        }
-        private void asbSearch_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            var search_term = args.QueryText;
-            var results = r.Where(t => t.Equals(search_term)).ToList();
-            asbSearch.ItemsSource = results;
-            asbSearch.IsSuggestionListOpen = true;
-        }
-        private void asbSearch_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            asbSearch.Text = args.SelectedItem as string;
-
-        }
+ 
+   
         private void StackPanel_Tapped(object sender, TappedRoutedEventArgs args)
         {
             ((Window.Current.Content as Frame).Content as MainPage).contentFrame.Navigate(typeof(ReservedPage), rooms[GridView1.SelectedIndex].RoomNumber);
@@ -289,7 +267,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {

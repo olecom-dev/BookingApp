@@ -99,7 +99,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -195,7 +195,7 @@ namespace BookingApp.Views
                     {
                     if (!pbPassword.Password.Equals(pbPasswordRepeat.Password))
                     {
-                        MsgBox.Show("Passwort stimmt nicht überein!");
+                        MessageBox.DisplayDialog("Fehler","Passwortwort stimmt nicht überein!");
                     }
                     else
                     {
@@ -221,16 +221,16 @@ namespace BookingApp.Views
                             if (recordsAffected >= 1)
                             {
                                 if (query.StartsWith("U"))
-                                    MsgBox.Show("Daten erfolgreich geändert!");
+                                    MessageBox.DisplayDialog("Fehler","Daten erfolgreich geändert!");
                                 if (query.StartsWith("I"))
-                                    MsgBox.Show("Daten erfolgreich eingefügt!");
+                                    MessageBox.DisplayDialog("Fehler","Daten erfolgreich eingefügt!");
                             }
                             else
-                                MsgBox.Show("Fehler beim ändern/einfügen des Datensatzes.");
+                                MessageBox.DisplayDialog("Fehler","Fehler beim ändern/einfügen des Datensatzes.");
                         }
                         catch (SqlException ex)
                         {
-                            MsgBox.Show(ex.Message);
+                            MessageBox.DisplayDialog("Fehler",ex.Message);
                         }
                         finally
                         {

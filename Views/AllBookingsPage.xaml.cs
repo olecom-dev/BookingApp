@@ -66,7 +66,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -99,7 +99,7 @@ namespace BookingApp.Views
                         }
                         catch (SqlException exsql)
                         {
-                            MsgBox.Show(exsql.Message);
+                            MessageBox.DisplayDialog("Fehler",exsql.Message);
                         }
                         finally
                         {
@@ -223,7 +223,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {

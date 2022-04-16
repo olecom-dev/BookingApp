@@ -128,7 +128,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -190,7 +190,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -372,7 +372,7 @@ namespace BookingApp.Views
 
                 if (e.NewDate.Date.Equals(blackoutDates[i].Date)||DateTime.Now.Equals(blackoutDates[i].Date))
                 {
-                    MsgBox.Show("Datum nicht verfügbar");
+                    MessageBox.DisplayDialog("Fehler","Datum nicht verfügbar");
                     dpReservedStart.Background = redBrush;
                     
                 }
@@ -396,7 +396,7 @@ namespace BookingApp.Views
 
                 if (e.NewDate.Date.Equals(blackoutDates[i].Date))
                 {
-                    MsgBox.Show("Datum nicht verfügbar");
+                    MessageBox.DisplayDialog("Fehler", "Datum nicht verfügbar");
                     dpReservedEnd.Background = redBrush;
                     dpReservedEnd.SelectedDate = DateTime.Now;
 
@@ -432,7 +432,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -451,17 +451,17 @@ namespace BookingApp.Views
                            int counter= cmd.ExecuteNonQuery();
                             if (counter > 0)
                             {
-                                MsgBox.Show("Buchung erfolgreich durchgeführt");
+                                MessageBox.DisplayDialog("OK","Buchung erfolgreich durchgeführt");
                             }
                             else
                             {
-                                MsgBox.Show("Fehler bei der Buchung");
+                                MessageBox.DisplayDialog("Fehler","Fehler bei der Buchung");
                             }
 
                         }
-                        catch (SqlException exsql)
+                        catch (SqlException eSql)
                         {
-                            MsgBox.Show(exsql.Message);
+                            MessageBox.DisplayDialog("Fehler", eSql.Message);
                         }
                         finally
                         {
@@ -485,7 +485,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -517,7 +517,7 @@ namespace BookingApp.Views
                         }
                         catch (SqlException exsql)
                         {
-                            MsgBox.Show(exsql.Message);
+                            MessageBox.DisplayDialog("Fehler",exsql.Message);
                         }
                         finally
                         {
@@ -544,7 +544,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MsgBox.Show(eSql.Message);
+                    MessageBox.DisplayDialog("Fehler",eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -560,7 +560,7 @@ namespace BookingApp.Views
                         }
                         catch (SqlException exsql)
                         {
-                            MsgBox.Show(exsql.Message);
+                            MessageBox.DisplayDialog("Fehler",exsql.Message);
                         }
                         finally
                         {

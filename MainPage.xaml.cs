@@ -120,7 +120,7 @@ namespace BookingApp
               //  NavView.SelectedItem = 4;
                // this.contentFrame.Navigate(typeof(CustomerPage));
             }
-            catch (Exception ex) { MsgBox.Show(ex.Message); } */
+            catch (Exception ex) { MessageBox.Show(ex.Message); } */
         } 
         internal static void FindChildren<T>(List<T> results, DependencyObject startNode)
   where T : DependencyObject
@@ -240,7 +240,7 @@ namespace BookingApp
                     }
                     catch (SqlException eSql)
                     {
-                        MsgBox.Show(eSql.Message);
+                        MessageBox.DisplayDialog("Fehler",eSql.Message);
                     }
                     if (conn.State == System.Data.ConnectionState.Open)
                     {
@@ -280,7 +280,7 @@ namespace BookingApp
                                     else if (userauth.Role.ToString().Contains("user") & userauth.IsActive == true)
                                     {
                                         mfiUsers.Visibility = Visibility.Collapsed;
-                                        mfiNewData.Visibility = Visibility.Collapsed;
+                                        
                                        
                                         this.contentFrame.Navigate(typeof(RoomsPage));
                                         break;
@@ -466,6 +466,12 @@ namespace BookingApp
                 CDialog c = new CDialog();
                 await c.ShowAsync();
             }
+        }
+        private void MfiUserNew_Click(object sender, RoutedEventArgs e)
+        {
+
+           
+            contentFrame.Navigate(typeof(CustomerPage));
         }
 
     }

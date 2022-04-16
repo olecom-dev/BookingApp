@@ -10,6 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       >
     <Page.Resources>
+       
 
 
 
@@ -50,14 +51,49 @@
                             <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xEA4A;" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Neue Daten" Name="mfiNewData" Click="MfiNewData_Click" Icon="Page2">
-    
-                    </MenuFlyoutItem>
+ 
                     <MenuFlyoutItem Text=" Abmelden / Benutzer wechseln" Name="mfiUsersLogout" Click="MfiUsersLogout_Click">
                         <MenuFlyoutItem.Icon>
-                            <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xEA4A;" />
+                            <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xE748;" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+
+        </StackPanel>
+        <StackPanel Name="user_menue1"
+            Height="50" Width="200"
+  Tapped="StackPanel_Tapped" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,230,0" >
+            <Button Width="200" Height="50">
+                <StackPanel>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe710;" FontWeight="Normal" FontSize="22" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" >
+                    </FontIcon>
+                    <TextBlock Text="Neue Daten" VerticalAlignment="Center" Name="tblockAccount1" Margin="40,-24,0,0" />
+                </StackPanel>
+            </Button>
+
+
+
+
+
+            <FlyoutBase.AttachedFlyout>
+
+                <MenuFlyout x:Name="mfUsers1">
+                    <MenuFlyoutItem   Text="Neuer Kunde"  Name="mfiUserData1" Click="MfiUserNew_Click" >
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xE8FA;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutItem Text="Neues Produkt" Name="mfiUsers1" Click="MfiUsers_Click">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xEC32;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Neues Zimmer" Name="mfiNewData1" Click="MfiNewData_Click" Icon="Page2">
+
+                    </MenuFlyoutItem>
+                   
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
 
