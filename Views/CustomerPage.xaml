@@ -19,9 +19,13 @@
     </Page.Transitions> 
 
     <Grid>
-        <ListView Name="CustomerList" 
+
+        <GridView Name="CustomerList" 
+                  
                   HorizontalAlignment="Left"
                   SelectionMode="Single"
+                  IsItemClickEnabled="True"
+                  ItemClick="ThisList_ItemClick"
                   SelectionChanged="CustomerList_SelectionChanged"
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   ScrollViewer.IsVerticalRailEnabled="True"
@@ -29,14 +33,19 @@
                   ScrollViewer.HorizontalScrollMode="Enabled"
                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
                   ScrollViewer.IsHorizontalRailEnabled="True"
-                  Margin="20,450,10,20" Padding="10"
+                  Margin="20,450,10,20" 
+                  AllowDrop="True"
+                  CanReorderItems="True"
+                  
+                 
                
                       >
-            <ListView.HeaderTemplate>
+            <GridView.HeaderTemplate>
                 <DataTemplate>
-                    <Grid  Background="DarkRed" >
+                    <Grid  Background="DarkRed"  >
                         <Grid.ColumnDefinitions >
                             <ColumnDefinition Width="100"  />
+                            <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="200"/>
@@ -45,18 +54,20 @@
 
                          
                         </Grid.ColumnDefinitions>
+                        
+                        <Button Style="{StaticResource MyButtonStyle}" Width="100" Height="60"  Foreground="White" FontSize="16"   VerticalAlignment="Center" Content="ID" Grid.Column="0" BorderThickness="0" Click="BtnID_Click"/>
+                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Nachname" Grid.Column="1" BorderThickness="0" Click="BtnLastname_Click" />
+                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Vorname" Grid.Column="2" BorderThickness="0" />
+                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Adresse" Grid.Column="3" BorderThickness="0" />
+                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Ort" Grid.Column="4" BorderThickness="0" />
+                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="PLZ" Grid.Column="5" BorderThickness="0" />
+  
 
-                        <TextBlock Margin="15" Foreground="White" FontSize="16" TextAlignment="Center"  VerticalAlignment="Center" Text="ID" Grid.Column="0"  Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Margin="15" Foreground="White" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" Text="Nachname" Grid.Column="1" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Margin="15"  Foreground="White" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" Text="Vorname" Grid.Column="2" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Margin="15"  Foreground="White" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" Text="Adresse" Grid.Column="3" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Margin="15"  Foreground="White" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" Text="Ort" Grid.Column="4" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Margin="15"  Foreground="White" FontSize="16" TextAlignment="Center"  VerticalAlignment="Center" Text="PLZ" Grid.Column="5" Style="{ThemeResource CaptionTextBlockStyle}"/>
-            
+
                     </Grid>
                 </DataTemplate>
-            </ListView.HeaderTemplate>
-            <ListView.ItemTemplate>
+            </GridView.HeaderTemplate>
+            <GridView.ItemTemplate>
                 <DataTemplate x:Name="TableDataTemplate" x:DataType="classes:Customer" >
                     <Grid Height="Auto" AutomationProperties.Name="{Binding CustomerID}">
                         <Grid.ColumnDefinitions>
@@ -77,9 +88,13 @@
 
                     </Grid>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        
+            </GridView.ItemTemplate>
+        </GridView>
+        <ComboBox x:Name="CmbSort" Width="200" Height="60"  Background="Orange" BorderThickness="0" Margin="1120,450,0,0" PlaceholderText="Sortierung" Style="{StaticResource MyComboBoxStyle}">
+            <ComboBoxItem Content="Aufsteigend"></ComboBoxItem>
+            <ComboBoxItem Content="Absteigend"></ComboBoxItem>
+        </ComboBox>
+
         <RelativePanel Margin="10,0,0,0" Name="CustomerPanel">
             <Grid Padding="10">
                 <Grid.ColumnDefinitions>
@@ -121,9 +136,12 @@
                 <TextBlock Text="Telefon" Margin="10" Grid.Column="2" Grid.Row="1"></TextBlock>
                 <TextBox Name="TboxPhone" Margin="10" Grid.Column="3" Grid.Row="1"></TextBox>
                 <TextBlock Text="Mobil" Margin="10" Grid.Column="2" Grid.Row="2"></TextBlock>
+               
                 <TextBox Name="TboxMobilePhone" Margin="10" Grid.Column="3" Grid.Row="2"></TextBox>
-                <Button Style="{StaticResource MyButtonStyle}" Name="ButtonNew" Margin="10" Width="300" Grid.Column="3" Grid.Row="3" Content="Neuer Kunde" Click="ButtonNew_Click"></Button>
-                <Button Style="{StaticResource MyButtonStyle}" Name="ButtonSave" Margin="10" Width="300" Grid.Column="3" Grid.Row="4" Content="Speichern" Click="ButtonSave_Click"></Button>
+                <TextBlock Text="Ausweisnummer" Margin="10" Grid.Column="2" Grid.Row="3"></TextBlock>
+                <TextBox Name="TboxPassport" Margin="10" Grid.Column="3" Grid.Row="3"></TextBox>
+                <Button Style="{StaticResource MyButtonStyle}" Name="ButtonNew" Margin="10" Width="300" Grid.Column="3" Grid.Row="4" Content="Neuer Kunde" Click="ButtonNew_Click"></Button>
+                <Button Style="{StaticResource MyButtonStyle}" Name="ButtonSave" Margin="10" Width="300" Grid.Column="3" Grid.Row="5" Content="Speichern" Click="ButtonSave_Click"></Button>
             </Grid>
         </RelativePanel>
     </Grid>

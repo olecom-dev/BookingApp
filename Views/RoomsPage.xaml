@@ -5,12 +5,19 @@
     xmlns:local="using:BookingApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local1="using:BookingApp.Classes"
+    
+    
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <UserControl.Resources>
+    
+    <Page.Resources>
+        
+ 
+    
         <local1:BitmapImageConverter x:Key="Converter1"/>
-    </UserControl.Resources>
+
+    </Page.Resources>
 
 
     <Grid>
@@ -46,12 +53,30 @@
                         <TextBlock Text="{Binding RoomNumber}" FontWeight="Bold" ></TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Vertical">
-                            <Image Name ="imgRoom" Source="{Binding Image}" Width="200">
+                            <Image Name ="imgRoom" Source="{Binding Image}" Width="320">
                             </Image>
 
 
                         </StackPanel>
-       
+
+                        <ScrollViewer 
+        Background="Orange" 
+        HorizontalScrollBarVisibility="Auto"
+        VerticalScrollBarVisibility="Auto"
+                            Height="120"
+        >
+                            <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Left">
+
+
+
+   
+                                <TextBlock  Name="TbDescription" Text="{Binding Description}" TextWrapping="Wrap" Margin="0,10,0,0" Width="300" Height="300"   PointerEntered="TbDescription_PointerEntered"
+              >
+                                 
+                                </TextBlock>
+                            
+                        </StackPanel>
+                        </ScrollViewer>
                         <StackPanel Orientation="Horizontal" Margin="10">
                             <TextBlock Text="Anzahl Betten:" Width="100"></TextBlock>
                             <TextBlock   Text="{Binding NumberOfBeds}"></TextBlock>
@@ -68,6 +93,7 @@
                             <TextBlock   Text="{Binding RoomSize}"></TextBlock>
                             <TextBlock   Text=" m²"></TextBlock>
                         </StackPanel>
+
 
                         <StackPanel Orientation="Horizontal" Margin="10">
                          <TextBlock Text="Verfügbar" Width="100"></TextBlock>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookingApp.Classes
 {
-    public class Customer : INotifyPropertyChanged
+    public class Customer 
     {
         public int CustomerID { get; set; }
         public string Lastname { get; set; }
@@ -20,11 +20,9 @@ namespace BookingApp.Classes
         public DateTime DateOfBirth { get; set; }
         public string Phone { get; set; }
         public string MobilePhone { get; set; }
-        
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public string Passport { get; set; }
+
+
     }
+
 }

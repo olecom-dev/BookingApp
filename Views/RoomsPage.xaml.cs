@@ -17,6 +17,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
+using System.Timers;
+
+
+
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
 namespace BookingApp.Views
@@ -24,8 +28,10 @@ namespace BookingApp.Views
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
+    /// 
     public sealed partial class RoomsPage : Page
     {
+     
         public string ConnectionString = (App.Current as App).ConnectionString;
         private List<Rooms> rooms = new List<Rooms>();
         private List<Booking> bookings = new List<Booking>();
@@ -33,9 +39,10 @@ namespace BookingApp.Views
         public RoomsPage()
         {
             this.InitializeComponent();
-         //   asbSearch.ItemsSource = rooms;  
+           
+            //   asbSearch.ItemsSource = rooms;  
 
-            
+
         }
         public class Bookings
         {
@@ -72,6 +79,23 @@ namespace BookingApp.Views
             GridView1.ItemsSource = rooms;
 
         }
+        private void scrollViewer_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+
+
+        }
+
+        private void scrollviewer_Unloaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+        private void TbDescription_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+          
+
+        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {   
              
@@ -172,6 +196,7 @@ namespace BookingApp.Views
                                     Available = result.GetBoolean(6),
                                     
                                     SourceImage = (byte[])result[7],
+                                    Description = result.GetString(8),
                                     
                                     
                                 };

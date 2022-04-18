@@ -24,6 +24,8 @@
                 <TextBox Name="tbPricePerNight" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="7"></TextBox>
                 <TextBlock Text="Zimmergröße:" Grid.Column="0" Grid.Row="8"></TextBlock>
                 <TextBox Name="tbRoomSize" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="9"></TextBox>
+                <TextBlock Text="Beschreibung:" Grid.Column="0" Grid.Row="8"></TextBlock>
+                <TextBox Name="tbDescription" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="10" Height="120" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
                 <Button Name="btnNewRoom" Content="Neues Zimmer" Margin="0,10,0,0" Click="BtnNewRoom_Click" HorizontalAlignment="Stretch" Style="{StaticResource MyButtonStyle}"></Button>
                 <Button Name="btnSaveRoom" Content="Speichern" Margin="0,10,0,0" Click="BtnSaveRoom_Click" HorizontalAlignment="Stretch" Style="{StaticResource MyButtonStyle}"></Button>
 

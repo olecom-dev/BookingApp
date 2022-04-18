@@ -18,6 +18,7 @@ namespace BookingApp.Classes
         public byte[] SourceImage { get; set; }
         public bool Available { get; set; }
         public BitmapImage Image { get; set; }
+        public string Description { get; set; }
 
     }
 }

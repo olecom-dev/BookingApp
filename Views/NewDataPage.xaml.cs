@@ -55,16 +55,16 @@ namespace BookingApp.Views
             {
                 if (file != null)
                 {
-                    query = "Update Rooms set RoomNumber=@RoomNumber, NumberOfBeds=@NumberOfBeds, PricePerNight=@PricePerNight, RoomSize=@RoomSize, Image=@Image, Available=@Available,ImageUrl=@ImageURL where ID="+cboRooms.SelectedValue;
+                    query = "Update Rooms set RoomNumber=@RoomNumber, NumberOfBeds=@NumberOfBeds, PricePerNight=@PricePerNight, RoomSize=@RoomSize, Image=@Image, Available=@Available,ImageUrl=@ImageURL, Description=@Description where ID="+cboRooms.SelectedValue;
                 }
                 else
                 {
-                    query= "Update Rooms set RoomNumber=@RoomNumber, NumberOfBeds=@NumberOfBeds, PricePerNight=@PricePerNight, RoomSize=@RoomSize, Available=@Available where ID="+cboRooms.SelectedValue;
+                    query= "Update Rooms set RoomNumber=@RoomNumber, NumberOfBeds=@NumberOfBeds, PricePerNight=@PricePerNight, RoomSize=@RoomSize, Available=@Available, Description=@DEscription where ID="+cboRooms.SelectedValue;
                 }
             }
             else
             {
-                query = "Insert into Rooms (RoomNumber, NumberOfBeds, PricePerNight, RoomSize, Image, Available, ImageUrl) values (@RoomNumber, @NumberOfBeds, @PricePerNight, @RoomSize, @Image, @Available, @ImageURL)";
+                query = "Insert into Rooms (RoomNumber, NumberOfBeds, PricePerNight, RoomSize, Image, Available, ImageUrl, Description) values (@RoomNumber, @NumberOfBeds, @PricePerNight, @RoomSize, @Image, @Available, @ImageURL, @Description)";
             }
             if (fileBytes != null || tbRoomNumber.Text != "" || tbNumberOfBeds.Text != "" || tbPricePerNight.Text != "" || tbRoomSize.Text != "")
             {
@@ -76,6 +76,7 @@ namespace BookingApp.Views
                 cmd.Parameters.AddWithValue("@PricePerNight", Decimal.Parse(tbPricePerNight.Text));
                 cmd.Parameters.AddWithValue("@RoomSize", Int32.Parse(tbRoomSize.Text));
                 cmd.Parameters.AddWithValue("@Available", true);
+                cmd.Parameters.AddWithValue("@Description", tbDescription.Text);
                 if (file != null)
                 {
                     cmd.Parameters.AddWithValue("@Image", fileBytes);
@@ -135,7 +136,7 @@ namespace BookingApp.Views
         }
         private async Task<List<Rooms>> GetRooms()
         {
-            string getUserQuery = "Select * from Rooms;";
+            string getRoomsQuery = "Select * from Rooms;";
             var rooms = new List<Rooms>();
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
@@ -151,7 +152,7 @@ namespace BookingApp.Views
                 {
                     using (SqlCommand cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = getUserQuery;
+                        cmd.CommandText = getRoomsQuery;
                         SqlDataReader result = cmd.ExecuteReader();
 
                         while (result.Read())
@@ -166,7 +167,7 @@ namespace BookingApp.Views
                                 RoomSize = result.GetString(4),
                                 ImageUrl = result.GetString(5),
                                 Available = result.GetBoolean(6),
-
+                                Description = result.GetString(8),
                                 SourceImage = (byte[])result[7],
 
 
@@ -205,6 +206,7 @@ namespace BookingApp.Views
                 tbNumberOfBeds.Text = listRooms[cboRooms.SelectedIndex].NumberOfBeds.ToString();
                 tbRoomSize.Text = listRooms[cboRooms.SelectedIndex].RoomSize.ToString();
                 tbPricePerNight.Text = listRooms[cboRooms.SelectedIndex].PricePerNight.ToString();
+                tbDescription.Text = listRooms[cboRooms.SelectedIndex].Description;
             }
             else
             {
@@ -213,6 +215,7 @@ namespace BookingApp.Views
                 tbRoomNumber.Text = String.Empty;
                 tbPricePerNight.Text = String.Empty;
                 tbRoomSize.Text = String.Empty;
+                tbDescription.Text = String.Empty;
             }
         }
         private void BtnNewRoom_Click(object sender, RoutedEventArgs e)

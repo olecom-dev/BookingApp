@@ -25,17 +25,21 @@ namespace BookingApp.Views
     /// </summary>
     public sealed partial class CustomerPage : Page
     {
-        List<Countries> country = new List<Countries>();
-        List<Customer> cus = new List<Customer>();
-        public string ConnectionString = (App.Current as App).ConnectionString;
  
+        List<Countries> country = new List<Countries>();
+        
+        ObservableCollection<Customer> cus = new ObservableCollection<Customer>();
+        public string ConnectionString = (App.Current as App).ConnectionString;
+        
 
         public CustomerPage()
         {
             this.InitializeComponent();
-
+           
             cus = GetCustomers(ConnectionString);
+            cus = new ObservableCollection<Customer>(cus.OrderBy(i => i.Lastname));
             country = GetCountries(ConnectionString);
+            
             this.TboxCustomerID.Text = cus[0].CustomerID.ToString();
             this.TboxLastname.Text = cus[0].Lastname;
             this.TboxFirstname.Text = cus[0].Firstname;
@@ -50,19 +54,55 @@ namespace BookingApp.Views
             this.CDPDateOfBirth.Date = cus[0].DateOfBirth;
             this.TboxPhone.Text = cus[0].Phone;
             this.TboxMobilePhone.Text = cus[0].MobilePhone;
+            this.TboxPassport.Text = cus[0].Passport;
+            
             this.CustomerList.ItemsSource = cus;
             ControlsEnabled(false);
+
+
+
+            
+           
+            {
+
+            }
+
             
  
         
 
 
         }
-
-        public List<Customer> GetCustomers(string connectionString)
+        public void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            const string GetCustomersQuery = "Select CustomerID, Lastname, Firstname, Address, City, Postalcode, Countrycode, E_Mail, DateOfBirth, Phone, MobilePhone from dbo.Customer;";
-            var customers = new List<Customer>();
+            ComboBox cmb = (ComboBox)CustomerList.SelectedItem;
+            
+
+            string selectedCar = (string)cmb.SelectedItem;
+            MessageBox.DisplayDialog("OK", selectedCar);
+            
+        }
+
+        public void BtnID_Click(object sender, RoutedEventArgs e)
+        {
+            
+           
+                this.CustomerList.ItemsSource = cus.OrderBy(i => i.CustomerID);
+            
+           
+        }
+        public void BtnLastname_Click(object sender, RoutedEventArgs e)
+        {
+
+            this.CustomerList.ItemsSource = cus.OrderBy(i => i.Lastname);
+
+        }
+        public ObservableCollection<Customer> GetCustomers(string connectionString ) {
+
+           
+            
+                const string GetCustomersQuery = "Select * from dbo.Customer";
+            var customers = new ObservableCollection<Customer>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -102,6 +142,8 @@ namespace BookingApp.Views
                                     customer.Phone = reader.GetString(9);
                                 if (!reader.IsDBNull(10))
                                     customer.MobilePhone = reader.GetString(10);
+                                if (!reader.IsDBNull(11))
+                                    customer.Passport = reader.GetString(11);
                                 customers.Add(customer);
                             }
                             return customers;
@@ -173,6 +215,7 @@ namespace BookingApp.Views
             this.TboxEMailAdress.Text = cus[i].EMailAddress;
             this.CboxCountry.SelectedValue = cus[i].Countrycode;
             this.CDPDateOfBirth.Date = cus[i].DateOfBirth;
+            this.TboxPassport.Text = cus[i].Passport;
             if (cus[i].Phone != null)
                 this.TboxPhone.Text = cus[i].Phone;
             else
@@ -194,6 +237,10 @@ namespace BookingApp.Views
             }
             return list;
         }
+        private void ThisList_ItemClick(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         private void ControlsEnabled(bool isEnabled)
         {
@@ -211,8 +258,8 @@ namespace BookingApp.Views
         }
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            string insertCustomer = "Insert into Customer (Lastname, Firstname, Address, City, Postalcode, Countrycode, E_Mail, DateOfBirth, Phone, MobilePhone)" +
-                                    "values (@Lastname, @Firstname, @Address, @City, @Postalcode, @Countrycode, @E_Mail, @DateOfBirth, @Phone, @MobilePhone);";
+            string insertCustomer = "Insert into Customer (Lastname, Firstname, Address, City, Postalcode, Countrycode, E_Mail, DateOfBirth, Phone, MobilePhone, Passport)" +
+                                    "values (@Lastname, @Firstname, @Address, @City, @Postalcode, @Countrycode, @E_Mail, @DateOfBirth, @Phone, @MobilePhone, @Passport);";
             using (SqlConnection conn = new SqlConnection((App.Current as App).ConnectionString))
             {
                 try
@@ -238,6 +285,7 @@ namespace BookingApp.Views
                         cmd.Parameters.AddWithValue("@DateOfBirth", CDPDateOfBirth.SelectedDate);
                         cmd.Parameters.AddWithValue("@Phone", TboxPhone.Text);
                         cmd.Parameters.AddWithValue("@MobilePhone", TboxMobilePhone.Text);
+                        cmd.Parameters.AddWithValue("@Passport", TboxPassport.Text);
 
                         try
                         {
