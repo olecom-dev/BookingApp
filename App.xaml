@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="Resources/MyButtonStyle.xaml"/>
                 <ResourceDictionary Source="Resources/MyCheckBoxStyle.xaml"/>
                 <ResourceDictionary Source="Resources/MyCalendarViewItemStyle.xaml"/>
+                <ResourceDictionary Source="Resources/MyComboBoxStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,7 +36,7 @@ namespace BookingApp.Views
         public CustomerPage()
         {
             this.InitializeComponent();
-           
+            
             cus = GetCustomers(ConnectionString);
             cus = new ObservableCollection<Customer>(cus.OrderBy(i => i.Lastname));
             country = GetCountries(ConnectionString);
@@ -85,16 +86,60 @@ namespace BookingApp.Views
 
         public void BtnID_Click(object sender, RoutedEventArgs e)
         {
-            
+            if(CmbSort.SelectedIndex==0)
            
                 this.CustomerList.ItemsSource = cus.OrderBy(i => i.CustomerID);
-            
-           
+            else
+                this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.CustomerID);
         }
         public void BtnLastname_Click(object sender, RoutedEventArgs e)
         {
 
-            this.CustomerList.ItemsSource = cus.OrderBy(i => i.Lastname);
+            if (CmbSort.SelectedIndex == 0)
+
+                this.CustomerList.ItemsSource = cus.OrderBy(i => i.Lastname);
+            else
+                this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.Lastname);
+
+        }
+        public void BtnFirstname_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (CmbSort.SelectedIndex == 0)
+
+                this.CustomerList.ItemsSource = cus.OrderBy(i => i.Firstname);
+            else
+                this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.Firstname);
+
+        }
+        public void BtnAdress_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (CmbSort.SelectedIndex == 0)
+
+                this.CustomerList.ItemsSource = cus.OrderBy(i => i.Address);
+            else
+                this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.Address);
+
+        }
+        public void BtnCity_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (CmbSort.SelectedIndex == 0)
+
+                this.CustomerList.ItemsSource = cus.OrderBy(i => i.City);
+            else
+                this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.City);
+
+        }
+        public void BtnPostalcode_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (CmbSort.SelectedIndex == 0)
+
+                this.CustomerList.ItemsSource = cus.OrderBy(i => i.Postalcode);
+            else
+                this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.Postalcode);
 
         }
         public ObservableCollection<Customer> GetCustomers(string connectionString ) {

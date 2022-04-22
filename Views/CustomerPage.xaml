@@ -11,13 +11,15 @@
     
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
    >
-   <Page.Transitions>
+    <Page.Transitions>
         <TransitionCollection>
             <EdgeUIThemeTransition Edge="Left">
             </EdgeUIThemeTransition>
         </TransitionCollection>
-    </Page.Transitions> 
+    </Page.Transitions>
+    <Page.Resources>
 
+    </Page.Resources>
     <Grid>
 
         <GridView Name="CustomerList" 
@@ -52,16 +54,17 @@
                             <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="200"/>
 
-                         
+
                         </Grid.ColumnDefinitions>
-                        
+
                         <Button Style="{StaticResource MyButtonStyle}" Width="100" Height="60"  Foreground="White" FontSize="16"   VerticalAlignment="Center" Content="ID" Grid.Column="0" BorderThickness="0" Click="BtnID_Click"/>
                         <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Nachname" Grid.Column="1" BorderThickness="0" Click="BtnLastname_Click" />
-                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Vorname" Grid.Column="2" BorderThickness="0" />
-                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Adresse" Grid.Column="3" BorderThickness="0" />
-                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Ort" Grid.Column="4" BorderThickness="0" />
-                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="PLZ" Grid.Column="5" BorderThickness="0" />
-  
+                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Vorname" Grid.Column="2" BorderThickness="0" Click="BtnFirstname_Click" />
+                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Adresse" Grid.Column="3" BorderThickness="0" Click="BtnAdress_Click" />
+
+                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Ort" Grid.Column="4" BorderThickness="0" Click="BtnCity_Click"/>
+                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="PLZ" Grid.Column="5" BorderThickness="0"  Click="BtnPostalcode_Click"/>
+
 
 
                     </Grid>
@@ -84,25 +87,41 @@
                         <TextBlock Text="{Binding Address}" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
                         <TextBlock Text="{Binding City}" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
                         <TextBlock Text="{Binding Postalcode}" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        
+
 
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-        <ComboBox x:Name="CmbSort" Width="200" Height="60"  Background="Orange" BorderThickness="0" Margin="1120,450,0,0" PlaceholderText="Sortierung" Style="{StaticResource MyComboBoxStyle}">
-            <ComboBoxItem Content="Aufsteigend"></ComboBoxItem>
-            <ComboBoxItem Content="Absteigend"></ComboBoxItem>
-        </ComboBox>
+        
+            <ComboBox x:Name="CmbSort"  Padding="0" Background="DarkRed" BorderThickness="0" Margin="1120,450,0,0" PlaceholderText="Sortierung" PlaceholderForeground="Snow" IsSynchronizedWithCurrentItem="False" Foreground="Snow" Width="200" Height="60" Style="{StaticResource MyComboBoxStyle}"  >
 
+            <ComboBoxItem  Background="DarkRed" Height="60" Foreground="Snow" Style="{StaticResource MyComboBoxItemStyle}" >
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70E;"></FontIcon>
+                    <TextBlock Margin="10,0,0,0" Text="(A-Z) Aufsteigend" ></TextBlock>
+                </StackPanel>
+              
+                
+
+
+            </ComboBoxItem>
+            <ComboBoxItem  Background="DarkRed" Foreground="Snow" Height="60" Style="{StaticResource MyComboBoxItemStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70D;"></FontIcon>
+                    <TextBlock  Margin="10,0,0,0" Text="(Z-A) Absteigend" ></TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+        </ComboBox>
+       
         <RelativePanel Margin="10,0,0,0" Name="CustomerPanel">
             <Grid Padding="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"></ColumnDefinition>
                     <ColumnDefinition Width="320"></ColumnDefinition>
                     <ColumnDefinition Width="120"></ColumnDefinition>
-                    <ColumnDefinition Width="320"> </ColumnDefinition>
-                    
+                    <ColumnDefinition Width="320"></ColumnDefinition>
+
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -114,8 +133,8 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
- 
-            <TextBlock Text="ID" Grid.Column="0" Margin="10" Grid.Row="0"></TextBlock>
+
+                <TextBlock Text="ID" Grid.Column="0" Margin="10" Grid.Row="0"></TextBlock>
                 <TextBox Name="TboxCustomerID" Margin="10"  Grid.Column="1" Grid.Row="0"></TextBox>
                 <TextBlock Text="Name" Margin="10" Grid.Column="0" Grid.Row="1"></TextBlock>
                 <TextBox Name="TboxLastname" Margin="10" Grid.Column="1" Grid.Row="1"></TextBox>
@@ -136,7 +155,7 @@
                 <TextBlock Text="Telefon" Margin="10" Grid.Column="2" Grid.Row="1"></TextBlock>
                 <TextBox Name="TboxPhone" Margin="10" Grid.Column="3" Grid.Row="1"></TextBox>
                 <TextBlock Text="Mobil" Margin="10" Grid.Column="2" Grid.Row="2"></TextBlock>
-               
+
                 <TextBox Name="TboxMobilePhone" Margin="10" Grid.Column="3" Grid.Row="2"></TextBox>
                 <TextBlock Text="Ausweisnummer" Margin="10" Grid.Column="2" Grid.Row="3"></TextBlock>
                 <TextBox Name="TboxPassport" Margin="10" Grid.Column="3" Grid.Row="3"></TextBox>
