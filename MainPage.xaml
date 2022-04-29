@@ -7,10 +7,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Windows.UI.Xaml.Controls"
                    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" d:DesignWidth="1502" d:DesignHeight="996"
       >
     <Page.Resources>
-       
+
 
 
 
@@ -22,9 +22,12 @@
     </Page.Resources>
 
     <Grid>
+
+
+
         <StackPanel Name="user_menue"
-            Height="50" Width="200"
-  Tapped="StackPanel_Tapped" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,10,0" >
+            Height="50" Width="200" 
+  Tapped="StackPanel_Tapped" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" >
             <Button Width="200" Height="50">
                 <StackPanel>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE77B;" FontWeight="Normal" FontSize="22" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" >
@@ -38,7 +41,7 @@
 
 
             <FlyoutBase.AttachedFlyout>
-                
+
                 <MenuFlyout x:Name="mfUsers">
                     <MenuFlyoutItem   Text="Benutzerinformationen"  Name="mfiUserData" Click="MfiUserDate_Click" >
                         <MenuFlyoutItem.Icon>
@@ -51,7 +54,7 @@
                             <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xEA4A;" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
- 
+
                     <MenuFlyoutItem Text=" Abmelden / Benutzer wechseln" Name="mfiUsersLogout" Click="MfiUsersLogout_Click">
                         <MenuFlyoutItem.Icon>
                             <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xE748;" />
@@ -63,14 +66,8 @@
         </StackPanel>
         <StackPanel Name="user_menue1"
             Height="50" Width="200"
-  Tapped="StackPanel_Tapped" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,230,0" >
-            <Button Width="200" Height="50">
-                <StackPanel>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe710;" FontWeight="Normal" FontSize="22" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" >
-                    </FontIcon>
-                    <TextBlock Text="Neue Daten" VerticalAlignment="Center" Name="tblockAccount1" Margin="40,-24,0,0" />
-                </StackPanel>
-            </Button>
+                    
+  Tapped="StackPanel_Tapped" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,230,0" >
 
 
 
@@ -93,16 +90,22 @@
                     <MenuFlyoutItem Text="Neues Zimmer" Name="mfiNewData1" Click="MfiNewData_Click" Icon="Page2">
 
                     </MenuFlyoutItem>
-                   
+
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
+            <Button Width="200" Height="50">
+                <StackPanel>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" FontWeight="Normal" FontSize="22" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" />
+                    <TextBlock Text="Neue Daten" VerticalAlignment="Center" x:Name="tblockAccount1" Margin="40,-24,0,0" />
+                </StackPanel>
+            </Button>
 
         </StackPanel>
 
 
         <NavigationView
 
-                
+                Margin="0,10,0,0"
             IsSettingsVisible="True"
              IsPaneToggleButtonVisible="true"
                             PaneTitle=" Menü "                            
@@ -112,30 +115,29 @@
             
             PaneOpening="NavView_PaneOpening"
             PaneClosing="NavView_PaneClosing"
-            
                             AlwaysShowHeader="True"
                             Header="  "   
             SelectionChanged="NavView_SelectionChanged"
 ItemInvoked="NavView_ItemInvoked"
- Loaded="NavView_Loaded" 
+ Loaded="NavView_Loaded" Grid.RowSpan="2" 
           
                             >
-           
-            
-            
-            
-                <controls:NavigationView.Resources>
+
+
+
+
+            <controls:NavigationView.Resources>
                 <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="DarkRed"/>
                 <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="DarkRed" />
                 <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Snow"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="Snow"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="Lavender"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="Red"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver" Color="Red"/>
-                    <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed" Color="Pink"/>
+                <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="Snow"/>
+                <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="Lavender"/>
+                <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="Red"/>
+                <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver" Color="Red"/>
+                <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed" Color="Pink"/>
                 <SolidColorBrush x:Key="NavigationViewPaneFooterItemSelected" Color="Red"/>
             </controls:NavigationView.Resources>
-            
+
 
             <controls:NavigationView.PaneToggleButtonStyle>
                 <Style TargetType="Button" BasedOn="{StaticResource PaneToggleButtonStyle}">
@@ -150,7 +152,7 @@ ItemInvoked="NavView_ItemInvoked"
                     <AppBarButton Icon="Page2" Margin="0, 2, 1, 0" Tag="New_Sheet" HorizontalAlignment="Center" Width="56.5" Height="56.5" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited" Foreground="Snow" Click="BtnNew_Click"/>
                     <AppBarButton Icon="OpenFile" Margin="1, 2, 0, 0" Tag="Open_Sheet" HorizontalAlignment="Center" Width="56.5" Height="56.5" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited" Foreground="Snow"/>
                     <AppBarButton Icon="Save" Margin="1, 2, 0, 0" Tag="Save_Sheet" HorizontalAlignment="Center" Width="56.5" Height="56.5" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited" Foreground="Snow"/>
-                    
+
                     <AppBarButton Icon="Calculator" Margin="1, 2, 0, 0" Tag="Calculator_Open" HorizontalAlignment="Center" Width="56.5" Height="56.5" Click="Press" PointerEntered="Button_PointerEntered" PointerExited="Button_PointerExited"  Foreground="Snow"/>
                 </StackPanel>
 
@@ -186,7 +188,7 @@ ItemInvoked="NavView_ItemInvoked"
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
-                
+
 
                 <NavigationViewItem Name="Add_P" 
                                         
@@ -226,14 +228,14 @@ ItemInvoked="NavView_ItemInvoked"
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
- 
+
 
 
 
             </NavigationView.MenuItems>
 
 
-    <!--        <NavigationView.PaneFooter >
+            <!--        <NavigationView.PaneFooter >
                 <NavigationViewItem  Tapped="NavigationViewItem_Tapped" >
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="icofont" Glyph="&#xED09;" FontWeight="Normal" FontSize="22"/>
@@ -256,12 +258,12 @@ ItemInvoked="NavView_ItemInvoked"
 
 
 
-            <Frame  x:Name="contentFrame"  x:FieldModifier="public"  Margin="10,10,10,10" >
-                
+            <Frame  x:Name="contentFrame"  x:FieldModifier="public"  Margin="10,10,-52,-119" >
+
             </Frame>
         </NavigationView>
 
-        
+
     </Grid>
 
 

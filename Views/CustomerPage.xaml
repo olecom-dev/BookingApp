@@ -22,8 +22,8 @@
     </Page.Resources>
     <Grid>
 
-        <GridView Name="CustomerList" 
-                  
+        <ListView Name="CustomerList" 
+                  ContainerContentChanging="ListView_ContainerContentChanging"
                   HorizontalAlignment="Left"
                   SelectionMode="Single"
                   IsItemClickEnabled="True"
@@ -38,11 +38,12 @@
                   Margin="20,450,10,20" 
                   AllowDrop="True"
                   CanReorderItems="True"
+                 
                   
                  
                
                       >
-            <GridView.HeaderTemplate>
+            <ListView.HeaderTemplate>
                 <DataTemplate>
                     <Grid  Background="DarkRed"  >
                         <Grid.ColumnDefinitions >
@@ -69,8 +70,8 @@
 
                     </Grid>
                 </DataTemplate>
-            </GridView.HeaderTemplate>
-            <GridView.ItemTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
                 <DataTemplate x:Name="TableDataTemplate" x:DataType="classes:Customer" >
                     <Grid Height="Auto" AutomationProperties.Name="{Binding CustomerID}">
                         <Grid.ColumnDefinitions>
@@ -91,8 +92,8 @@
 
                     </Grid>
                 </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
+            </ListView.ItemTemplate>
+        </ListView>
         
             <ComboBox x:Name="CmbSort"  Padding="0" Background="DarkRed" BorderThickness="0" Margin="1120,450,0,0" PlaceholderText="Sortierung" PlaceholderForeground="Snow" IsSynchronizedWithCurrentItem="False" Foreground="Snow" Width="200" Height="60" Style="{StaticResource MyComboBoxStyle}"  >
 

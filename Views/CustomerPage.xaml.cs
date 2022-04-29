@@ -142,6 +142,18 @@ namespace BookingApp.Views
                 this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.Postalcode);
 
         }
+        void ListView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+        {
+            if (args.ItemIndex % 2 != 0)
+            {
+                args.ItemContainer.Background = new SolidColorBrush(Colors.LightGoldenrodYellow);
+                
+            }
+            else
+            {
+                args.ItemContainer.Background = new SolidColorBrush(Colors.LightSalmon);
+            }
+        }
         public ObservableCollection<Customer> GetCustomers(string connectionString ) {
 
            

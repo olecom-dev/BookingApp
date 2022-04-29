@@ -26,6 +26,8 @@ using System.Drawing;
 using Color = Windows.UI.Color;
 using User = BookingApp.Classes.User;
 using Windows.UI.Popups;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x407 dokumentiert.
 
@@ -47,14 +49,52 @@ namespace BookingApp
             this.InitializeComponent();
             //  LoadApplication(new Xamarin.Forms.Application());
             GlobalVariables.TaxRate = 7;
-            
-            
+
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) =>
+            {
+                
+
+                if (contentFrame.CanGoBack)
+                {
+                    e.Handled = true;
+                 contentFrame.GoBack();
+                }
+            };
+            ApplicationViewTitleBar appTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Maximized;
+            ApplicationView.GetForCurrentView().Title = "Hotelmanagement";
+            // Set the title bar background and forground color
+            appTitleBar.BackgroundColor = Colors.Snow;
+            appTitleBar.ForegroundColor = Colors.Black;
+
+            // Set the title bar inactive colors
+            appTitleBar.InactiveBackgroundColor = Colors.DarkGray;
+            appTitleBar.InactiveForegroundColor = Colors.LightGray;
+
+            // Set the title bar button colors
+            appTitleBar.ButtonBackgroundColor = Colors.DarkRed;
+            appTitleBar.ButtonForegroundColor = Colors.Snow;
+
+            // Title bar button hover state colors
+            appTitleBar.ButtonHoverBackgroundColor = Colors.Orange;
+            appTitleBar.ButtonHoverForegroundColor = Colors.Snow;
+
+            // Title bar button inctive state colors
+            appTitleBar.ButtonInactiveBackgroundColor = Colors.Red;
+            appTitleBar.ButtonInactiveForegroundColor = Colors.Snow;
+
+            // Title bar button pressed state colors
+            appTitleBar.ButtonPressedBackgroundColor = Colors.IndianRed;
+            appTitleBar.ButtonPressedForegroundColor = Colors.Snow;
+
 
 
 
 
 
         }
+
         private async  void Page_Loaded(object sender, RoutedEventArgs e)
         {
            
@@ -102,17 +142,9 @@ namespace BookingApp
 
         private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
-            
-            /*        List<Button> listbutton = new List<Button>();
-                     FindChildren(listbutton, NavView); //nvSample is a NavigationView control
-                     foreach (var bttn in listbutton)
-                     {
-                         if (bttn.Name == "TogglePaneButton")
-                         {
-                             bttn.Click += pane_Opening;
-                         }
-                     } */
-             contentFrame.Navigate(typeof(BlankPage));
+
+
+                contentFrame.Navigate(typeof(BlankPage));
             
 
        /*     try
@@ -121,7 +153,8 @@ namespace BookingApp
                // this.contentFrame.Navigate(typeof(CustomerPage));
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); } */
-        } 
+        }
+
         internal static void FindChildren<T>(List<T> results, DependencyObject startNode)
   where T : DependencyObject
         {
