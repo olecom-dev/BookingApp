@@ -61,7 +61,7 @@ namespace BookingApp.Views
 
             SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
             SolidColorBrush greenBrush = new SolidColorBrush(Windows.UI.Colors.Green);
-           SolidColorBrush blackBrush = new SolidColorBrush(Windows.UI.Colors.Black);
+       //    SolidColorBrush blackBrush = new SolidColorBrush(Windows.UI.Colors.Black);
             TboxName.Text = "";
             // Register callback for next phase.
 

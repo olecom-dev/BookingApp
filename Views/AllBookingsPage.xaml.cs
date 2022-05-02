@@ -55,7 +55,7 @@ namespace BookingApp.Views
         }
         private List<Rooms> GetRoomID()
         {
-            Rooms i = new Rooms();
+        //    Rooms i = new Rooms();
             List<Rooms> roomNumbers = new List<Rooms>();
             string queryRoomID = "Select  * from Rooms;";
             using (SqlConnection conn = new SqlConnection(ConnectionString))
@@ -80,9 +80,11 @@ namespace BookingApp.Views
                             {
                                 while (reader.Read())
                                 {
-                                    Rooms r = new Rooms();
-                                    r.ID = reader.GetInt32(0);
-                                    r.RoomNumber = reader.GetString(1);
+                                    Rooms r = new Rooms
+                                    {
+                                        ID = reader.GetInt32(0),
+                                        RoomNumber = reader.GetString(1)
+                                    };
 
 
 
@@ -156,9 +158,11 @@ namespace BookingApp.Views
                 foreach (DateTime day in EachCalendarDay(StartDate, EndDate))
                 {
 
-                    List<Color> densityColors = new List<Color>();
-                    //  densityColors.Add(Colors.DarkRed);
-                    densityColors.Add(Colors.DarkGreen);
+                    List<Color> densityColors = new List<Color>
+                    {
+                        //  densityColors.Add(Colors.DarkRed);
+                        Colors.DarkGreen
+                    };
 
 
                     if (args.Item.Date.Date.Equals(DateTime.Now.Date)&& args.Item.Date.Date.Equals(day))

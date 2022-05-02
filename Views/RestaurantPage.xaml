@@ -14,6 +14,7 @@
             </EdgeUIThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
+  
     <Grid>
         <StackPanel>
         <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
@@ -79,7 +80,8 @@
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>
+                     
+                    </ListView>
                 <StackPanel Orientation="Horizontal" BorderBrush="DarkRed" BorderThickness="2">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Margin="10,0,0,0" Text="Kategorie wählen"></TextBlock>
@@ -194,7 +196,11 @@
                 <StackPanel Margin="20">
                     <Button Name="btnBook" Margin="0,15,0,0" Content="Bonnieren" Width="200" Style="{StaticResource MyButtonStyle}" Click="BtnBook_Click"></Button>
                 </StackPanel>
+                <StackPanel Margin="20">
+                    <Button Name="btnBill" Margin="0,15,0,0" Content="Rechnung" Width="200" Style="{StaticResource MyButtonStyle}" Click="BtnBill_Click"></Button>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
+
     </Grid>
 </Page>

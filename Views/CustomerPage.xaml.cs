@@ -74,7 +74,7 @@ namespace BookingApp.Views
 
 
         }
-        public void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        public void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cmb = (ComboBox)CustomerList.SelectedItem;
             

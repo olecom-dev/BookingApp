@@ -16,6 +16,11 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Timers;
 
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Microsoft.Toolkit.Uwp.Helpers;
+using Windows.Graphics.Printing;
+
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
 namespace BookingApp.Views
@@ -31,8 +36,13 @@ namespace BookingApp.Views
         List<string> productCodes = new List<string>();
         List<Table> tables = new List<Table>();
         List<string> tab = new List<string>();
-        int count = 1;
-     
+        readonly int count = 1;
+
+       
+
+
+
+
         public string ConnectionString = (App.Current as App).ConnectionString;
         public RestaurantPage()
         {
@@ -225,6 +235,18 @@ namespace BookingApp.Views
             return null;
 
         }
+
+        private  void BtnBill_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(var item in restaurantBookings)
+            {
+                GlobalVariables.restaurantBookings.Add(item);
+                
+            }
+            GlobalVariables.TableNumber = tbTableNumber.Text;
+            Frame.Navigate(typeof(PrintPageBookings));
+
+        }
         private List<Category> GetCategorys(string connectionString)
         {
             List<Category> categorys = new List<Category>();
@@ -288,7 +310,7 @@ namespace BookingApp.Views
                 }
                 catch (SqlException eSql)
                 {
-                    MessageBox.DisplayDialog("Fehler",eSql.Message);
+                    MessageBox.DisplayDialog("Fehler", eSql.Message);
                 }
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
@@ -324,23 +346,26 @@ namespace BookingApp.Views
         }
 
 
-        private  void BtnBook_Click(object sender, RoutedEventArgs args)
+        private void BtnBook_Click(object sender, RoutedEventArgs args)
         {
-            
+
             var product = prods.Where(t => t.ProductCode.Equals(tbProductCode.Text)).ToList();
             if (product.Count > 0) {
-                RestaurantBooking res = new RestaurantBooking();
-                res.Price = product[0].ProductPrice;
-                res.Multiplicator = Int32.Parse(tbCount.Text);
-                res.BookingTime = DateTime.Now;
-                res.BookingCode = product[0].ProductCode;
-                res.TableNumber = tbTableNumber.Text;
+                RestaurantBooking res = new RestaurantBooking
+                {
+                    Price = product[0].ProductPrice,
+                    Multiplicator = Int32.Parse(tbCount.Text),
+                    BookingTime = DateTime.Now,
+                    BookingCode = product[0].ProductCode,
+                    TableNumber = tbTableNumber.Text,
+                    ProductName =product[0].ProductName
+                };
                 tbPrice.Text = res.PriceOverall.ToString();
                 restaurantBookings.Add(res);
                 ClearTextBoxes();
             }
-       
-          
+
+
 
         }
         private void TbCount_TextChanged(object sender, TextChangedEventArgs args)
@@ -350,7 +375,7 @@ namespace BookingApp.Views
             {
                 tbPrice.Text = (product[0].ProductPrice * Int32.Parse(tbCount.Text)).ToString();
             }
-            }
+        }
         private void TbProductCode_TextChanged(object sender, TextChangedEventArgs args)
         {
             var product = prods.Where(t => t.ProductCode.Equals(tbProductCode.Text)).ToList();
@@ -359,14 +384,15 @@ namespace BookingApp.Views
                 tbPrice.Text = (product[0].ProductPrice * Int32.Parse(tbCount.Text)).ToString();
             }
         }
-        private   void ClearTextBoxes()
+        private void ClearTextBoxes()
         {
-            
+
             tbProductCode.Text = "";
             tbCount.Text = "1";
             tbPrice.Text = "";
-            
-            
+
+
         }
+ 
     }
 }

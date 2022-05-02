@@ -67,18 +67,20 @@ namespace BookingApp.Views
                                 {
                                 // mfiUsers.Visibility = Visibility.Collapsed;
 
-                                var userauth = new User();
-                                userauth.ID = reader.GetInt32(0);
-                                userauth.Firstname = reader.GetString(1);
-                                userauth.Lastname = reader.GetString(2);
+                                var userauth = new User
+                                {
+                                    ID = reader.GetInt32(0),
+                                    Firstname = reader.GetString(1),
+                                    Lastname = reader.GetString(2),
 
-                                    userauth.Username = reader.GetString(3);
+                                    Username = reader.GetString(3),
 
-                                    userauth.Password = reader.GetString(4);
-                                    userauth.Role = reader.GetString(5);
-                                userauth.IsActive = reader.GetBoolean(6);
-                                userauth.EMail = reader.GetString(7);                                
-                                    userList.Add(userauth);
+                                    Password = reader.GetString(4),
+                                    Role = reader.GetString(5),
+                                    IsActive = reader.GetBoolean(6),
+                                    EMail = reader.GetString(7)
+                                };
+                                userList.Add(userauth);
                                 
 
                             }

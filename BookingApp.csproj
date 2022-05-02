@@ -169,6 +169,12 @@
     <Compile Include="Views\NewDataPage.xaml.cs">
       <DependentUpon>NewDataPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PrintPage.xaml.cs">
+      <DependentUpon>PrintPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintPageBookings.xaml.cs">
+      <DependentUpon>PrintPageBookings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReservedPage.xaml.cs">
       <DependentUpon>ReservedPage.xaml</DependentUpon>
     </Compile>
@@ -310,6 +316,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NewDataPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintPageBookings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

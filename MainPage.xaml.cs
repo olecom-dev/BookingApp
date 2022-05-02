@@ -231,9 +231,11 @@ namespace BookingApp
         }
         private async void Press(object sender, RoutedEventArgs e)
         {
-            var options = new Windows.System.LauncherOptions();
-            options.TreatAsUntrusted = false;
-            options.DesiredRemainingView = Windows.UI.ViewManagement.ViewSizePreference.UseNone;
+            var options = new Windows.System.LauncherOptions
+            {
+                TreatAsUntrusted = false,
+                DesiredRemainingView = Windows.UI.ViewManagement.ViewSizePreference.UseNone
+            };
             await Windows.System.Launcher.LaunchUriAsync(new Uri("calculator:"), options);
 
         }

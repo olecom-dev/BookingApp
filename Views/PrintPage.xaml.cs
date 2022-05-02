@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BookingApp.Classes;
+using Microsoft.Toolkit.Uwp.Helpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,8 +18,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Printing;
-using BookingApp.Classes;
-using Microsoft.Toolkit.Uwp.Helpers;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -29,13 +29,13 @@ namespace BookingApp.Views
     public sealed partial class PrintPage : Page
     {
         //   List<RestaurantBooking> restaurantBooking= new List<RestaurantBooking>();
- 
+
 
 
         public PrintPage()
         {
             this.InitializeComponent();
-           
+
 
 
 

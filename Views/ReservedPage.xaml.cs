@@ -284,12 +284,12 @@ namespace BookingApp.Views
                 foreach (DateTime day in EachCalendarDay(StartDate, EndDate))
                 {
 
-                    List<Color> densityColors = new List<Color>
+  /*                  List<Color> densityColors = new List<Color>
                     {
                         //  densityColors.Add(Colors.DarkRed);
                         Colors.DarkGreen
                     };
-
+  */
 
                     if (args.Item.Date.Date.Equals(DateTime.Now.Date)&&!DateTime.Now.Date.Equals(day))
                     {

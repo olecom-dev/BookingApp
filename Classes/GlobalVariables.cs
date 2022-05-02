@@ -11,5 +11,8 @@ namespace BookingApp.Classes
         public static  string UserID { get; set; }
         public static DateTime LastLogin { get; set; }
         public static Decimal TaxRate { get; set; }
+        public static List<RestaurantBooking> restaurantBookings = new List<RestaurantBooking>();
+        public static string TableNumber { get; set; }
+        public static Decimal PriceComplete { get; set; }
     }
 }

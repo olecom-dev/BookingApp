@@ -34,7 +34,7 @@ namespace BookingApp.Views
      
         public string ConnectionString = (App.Current as App).ConnectionString;
         private List<Rooms> rooms = new List<Rooms>();
-        private List<Booking> bookings = new List<Booking>();
+        private readonly List<Booking> bookings = new List<Booking>();
         List<Rooms> r = null;
         public RoomsPage()
         {
@@ -79,14 +79,14 @@ namespace BookingApp.Views
             GridView1.ItemsSource = rooms;
 
         }
-        private void scrollViewer_Loaded(object sender, RoutedEventArgs e)
+        private void ScrollViewer_Loaded(object sender, RoutedEventArgs e)
         {
             
 
 
         }
 
-        private void scrollviewer_Unloaded(object sender, RoutedEventArgs e)
+        private void Scrollviewer_Unloaded(object sender, RoutedEventArgs e)
         {
             
         }
