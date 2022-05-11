@@ -473,7 +473,7 @@ namespace BookingApp
         }
         private void MfiUsers_Click( object sender, RoutedEventArgs e)
         {
-            contentFrame.Navigate(typeof(UserAccount));
+            contentFrame.Navigate(typeof(PrintAllRestaurantBookings));
         }
         private async void MfiUserDate_Click(object sender, RoutedEventArgs e)
         {

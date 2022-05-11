@@ -119,9 +119,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\AllRestaurantBookings.cs" />
     <Compile Include="Classes\BitmapImageConverter.cs" />
     <Compile Include="Classes\Booking.cs" />
+    <Compile Include="Classes\BookingCodes.cs" />
     <Compile Include="Classes\Category.cs" />
+    <Compile Include="Classes\Converters.cs" />
     <Compile Include="Classes\Countries.cs" />
     <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\CustomerFullName.cs" />
@@ -169,8 +172,8 @@
     <Compile Include="Views\NewDataPage.xaml.cs">
       <DependentUpon>NewDataPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PrintPage.xaml.cs">
-      <DependentUpon>PrintPage.xaml</DependentUpon>
+    <Compile Include="Views\PrintAllRestaurantBookings.xaml.cs">
+      <DependentUpon>PrintAllRestaurantBookings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PrintPageBookings.xaml.cs">
       <DependentUpon>PrintPageBookings.xaml</DependentUpon>
@@ -319,7 +322,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PrintPage.xaml">
+    <Page Include="Views\PrintAllRestaurantBookings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -358,8 +361,13 @@
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>7.1.2</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Files\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Icons\SEGMDL2.TTF" />
   </ItemGroup>

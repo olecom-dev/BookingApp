@@ -24,10 +24,19 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Posten:" Width="80"></TextBlock>
-                    <TextBlock x:Name="tbBookingCode" Width="60" Text="{Binding BookingCode}"></TextBlock>
+                    <TextBox x:Name="tbBookingCode" Width="60" Text="{Binding BookingCode}"></TextBox>
                     <TextBlock x:Name="tbBookingName" Width="120" Text="{Binding ProductName}"></TextBlock>
-                    <TextBlock x:Name="tbBookingPricePrintable" Width="60" Text="{Binding PricePrintable}"></TextBlock>
-                    <TextBlock x:Name="tbBookingPriceOverall"  Text="{Binding PriceOverall}"></TextBlock>
+                    <TextBox x:Name="tbMultiplicator" Width="40" Text="{Binding Multiplicator}" BorderThickness="0"></TextBox>
+                    <TextBlock x:Name="tbX" Width="30" Text="x" Margin="3"></TextBlock>
+                    <TextBox x:Name="tbPrice" Width="55" Text="{Binding Price}" BorderThickness="0" TextAlignment="Left">
+                    </TextBox>
+                    <TextBlock x:Name="tbEuro" Text="€" Width="30" Margin="3"></TextBlock>
+                    
+                        <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="tbBookingPriceOverall" Width="55" Text="{Binding PriceOverall}" BorderThickness="0" TextAlignment="Left"></TextBox>
+                        <TextBlock Text="€" Margin="3"></TextBlock>
+                        
+                    </StackPanel>
                 </StackPanel>
 
 
@@ -45,8 +54,9 @@
             <ColumnDefinition Width="19*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="500"></RowDefinition>
-            <RowDefinition Height="500"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
 
@@ -55,22 +65,34 @@
         <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" >
 
 
-        <ListView  Name="PrintSampleListView" ItemsSource="{x:Bind restaurantBookings,Mode=OneWay}"  ItemTemplate="{StaticResource CustomPrintTemplate}" IsEnabled="False"  VerticalAlignment="Bottom" RenderTransformOrigin="0.504,0.499" Grid.ColumnSpan="4"  >
-
+        <ListView  Name="PrintListView" 
+                   ItemsSource="{x:Bind restaurantBookings,Mode=TwoWay}"  
+                   ItemTemplate="{StaticResource CustomPrintTemplate}" 
+                   VerticalAlignment="Bottom" 
+                   RenderTransformOrigin="0.504,0.499" 
+                   Grid.ColumnSpan="4" IsItemClickEnabled="True"
+                   SelectionChanged="MySelectionChanged"
+                   ItemClick="PrintListItem_Click" Tapped="PrintListView_Tapped">
+               
                 <ListView.Footer >
                         <ItemsControl Name="FooterControl"  >
                         <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="tbPriceCompleteText" Margin="10" Width="300" Text="Gesamtpreis:" />
+                        <TextBlock x:Name="tbPriceCompleteText" Margin="10" Width="420" Text="Gesamtpreis:" />
+                           
                         <TextBlock x:Name="tbPriceComplete" Margin="10" />
+                            <TextBlock x:Name="tbEuro1" Text="€" Width="30" Margin="10"></TextBlock>
                         </StackPanel>
                     </ItemsControl>
                 </ListView.Footer>
             </ListView>
         </StackPanel>
-        <Grid x:Name="Container" Margin="10,10,0,658" Grid.Column="1" Grid.Row="0">
+        <Grid x:Name="Container" Margin="10,10,0,0" Grid.Column="1" Grid.Row="0">
+
 
         </Grid>
-        <Button x:Name="BtnPrint" Grid.Column="0" Grid.Row="1" Style="{StaticResource MyButtonStyle}" Click="BtnPrint_Click" Content="Rechnung drucken" Width="200" Margin="10,10,0,0" Height="44" VerticalAlignment="Top"/>
+        <Button x:Name="BtnPrint" Grid.Column="0" Grid.Row="1" Style="{StaticResource MyButtonStyle}" Click="BtnPrint_Click" Content="Rechnung drucken" Width="200" Margin="10,30,0,0" Height="44" VerticalAlignment="Top"/>
+      
+        
 
     </Grid>
 </Page>
