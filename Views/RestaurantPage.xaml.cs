@@ -20,6 +20,7 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Windows.Graphics.Printing;
+using System.Threading.Tasks;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -63,6 +64,7 @@ namespace BookingApp.Views
 
             ProductsList.ItemsSource = prods;
             TablesList.ItemsSource = tables;
+            
             //     ProductsList.SelectedIndex = 0;
         }
         private void TablesList_SelectionChanged(object sender, SelectionChangedEventArgs args)
@@ -367,6 +369,47 @@ namespace BookingApp.Views
 
 
 
+        }
+        private async void BtnNewTable_Click(object sender, RoutedEventArgs e)
+        {
+            string InsertNewTable = "Insert into Tables (TableNumber, Location) Values (@TableNumber, @Location)";
+            using (SqlConnection conn = new SqlConnection((App.Current as App).ConnectionString))
+            {
+                try
+                {
+                    conn.Open();
+                }
+                catch (SqlException eSql)
+                {
+                    MessageBox.DisplayDialog("Fehler", eSql.Message);
+                }
+                if (conn.State == System.Data.ConnectionState.Open)
+                {
+                    using (SqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = InsertNewTable;
+
+                        cmd.Parameters.AddWithValue("@TableNumber",tboxTableNumber.Text);
+
+                        cmd.Parameters.AddWithValue("@Location", tboxTableDescription.Text);
+
+
+                        try
+                        {
+                            cmd.ExecuteNonQuery();
+
+                        }
+                        catch (SqlException eSql)
+                        {
+                            MessageBox.DisplayDialog("Fehler", eSql.Message);
+                        }
+                    }
+                }
+                conn.Close();
+                await Task.Delay(100);
+                Frame.Navigate(this.GetType());
+
+            }
         }
         private void TbCount_TextChanged(object sender, TextChangedEventArgs args)
         {

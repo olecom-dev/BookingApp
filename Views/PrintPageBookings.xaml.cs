@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using System.Data.SqlClient;
 using System.Xml.Serialization;
 using Windows.Storage;
+using System.Globalization;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -31,6 +32,7 @@ namespace BookingApp.Views
     /// </summary>
     public sealed partial class PrintPageBookings : Page
     {
+        //Variabledeclaration
         Decimal priceOverall = 0;
         String BookingCode = "";
         public List<RestaurantBooking> restaurantBookings = new List<RestaurantBooking>();
@@ -38,13 +40,18 @@ namespace BookingApp.Views
         ListView listView = new ListView();
         List<RestaurantBooking> allBookings = new List<RestaurantBooking>();
         List<AllRestaurantBookings> arb = new List<AllRestaurantBookings>();
+        //Constructor
         public PrintPageBookings()
         {
             this.InitializeComponent();
             restaurantBookings.Clear();
             foreach (var items in GlobalVariables.restaurantBookings.Where(i => i.TableNumber == GlobalVariables.TableNumber))
             {
-
+                HyperlinkButton button = new HyperlinkButton();
+                button.Name = "BtnCalculate";
+                button.Content = "Aktualisieren";
+                button.Click += BtnCalculate_Click;
+                ListViewCalculate.Items.Add(button);
                 restaurantBookings.Add(items);
 
             }
@@ -54,8 +61,8 @@ namespace BookingApp.Views
 
             if (restaurantBookings.Count > 0)
             {
-                PrintListView.Header = string.Format("   Rechnung für Tisch: " + GlobalVariables.TableNumber + "{0}   Datum: " + DateTime.Now.Date.ToLongDateString(), Environment.NewLine);
-                //  PrintSampleListView.Footer = FooterControl;
+                PrintListView.Header = string.Format("   Rechnung für Tisch: {1}{0}   Datum: {2}{0}  =====================================================================================", Environment.NewLine, GlobalVariables.TableNumber, DateTime.Now.ToString("f"));
+                
             }
             foreach (var item in restaurantBookings)
             {
@@ -65,7 +72,7 @@ namespace BookingApp.Views
             GlobalVariables.PriceComplete = priceOverall;
             tbPriceComplete.Text = priceOverall.ToString();
         }
-        private void PrintListView_Tapped(object sender, TappedRoutedEventArgs e)
+        private void BtnCalculate_Click(object sender, RoutedEventArgs e)
         {
             int multiplicator = GlobalVariables.restaurantBookings.Find(i => i.TableNumber == GlobalVariables.TableNumber).Multiplicator;
             Decimal price = GlobalVariables.restaurantBookings.Find(i => i.TableNumber == GlobalVariables.TableNumber).Price;
@@ -80,6 +87,7 @@ namespace BookingApp.Views
                 var _Multiplicator = "tbMultiplicator";
                 var _BookingCode = "tbBookingCode";
                 var _ControlBookingCode = (TextBox)_Children.Find(c => c.Name == _BookingCode);
+                // button = (HyperlinkButton)_Children.Find(c => c.Name == "BtnCalculate");
                 BookingCode = _ControlBookingCode.Text;
                 var _ControlPrice = (TextBox)_Children.Find(c => c.Name == _Price);
                 var _ControlMultiplicator = (TextBox)_Children.Find(c => c.Name == _Multiplicator);
@@ -89,13 +97,18 @@ namespace BookingApp.Views
                 GlobalVariables.PriceComplete = Int32.Parse(_ControlMultiplicator.Text) * Decimal.Parse(_ControlPrice.Text);
                 GlobalVariables.restaurantBookings.Find(i => i.BookingCode == BookingCode).Multiplicator = Int32.Parse(_ControlMultiplicator.Text);
                 GlobalVariables.restaurantBookings.Find(i => i.BookingCode == BookingCode).Price = Decimal.Parse(_ControlPrice.Text);
-                //     restaurantBookings.Find(i => i.TableNumber == GlobalVariables.TableNumber).Multiplicator = Int32.Parse(_ControlMultiplicator.Text);
+                //       restaurantBookings.Find(i => i.TableNumber == GlobalVariables.TableNumber).Multiplicator = Int32.Parse(_ControlMultiplicator.Text);
                 //       restaurantBookings.Find(i => i.TableNumber == GlobalVariables.TableNumber).Price = Decimal.Parse(_ControlPrice.Text);
                 priceComplete += Decimal.Parse(_Control.Text);
                 tbPriceComplete.Text = priceComplete.ToString();
+
                 GlobalVariables.PriceComplete = priceComplete;
 
             }
+        }
+        private void PrintListView_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
 
 
             // MessageBox.DisplayDialog("Test", _Control.Text);
@@ -107,14 +120,16 @@ namespace BookingApp.Views
 
 
         }
-
-
         private void MySelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
 
         }
-
+        /// <summary>
+/// Get All Controls in Parent
+/// </summary>
+/// <param name="parent"></param>
+/// <returns>List of Controls</returns>
         private List<Control> AllChildren(DependencyObject parent)
         {
             var _List = new List<Control>();
@@ -130,7 +145,11 @@ namespace BookingApp.Views
             }
             return _List;
         }
-
+        /// <summary>
+        /// Print Method for printing listview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void BtnPrint_Click(object sender, RoutedEventArgs e)
         {
 
@@ -142,25 +161,29 @@ namespace BookingApp.Views
                 RowDefinition rd = new RowDefinition();
                 rd.Height = GridLength.Auto;
                 grid.RowDefinitions.Add(rd);
-
+               // ListBox listBox = new ListBox();
                 // Main content with layout from data template
 
 
                 //      listView.Height = 100;
                 //   listView.Margin = new Thickness(0, 0, 0,700);
-                listView.Footer = string.Format("   Gesamtpreis:                                                                                             {0}     €", GlobalVariables.PriceComplete);
+                listView.Footer = string.Format("   =========================================================================================={0}   Gesamtpreis:                                                                                                 {1}     €",Environment.NewLine ,GlobalVariables.PriceComplete);
+          //     listBox.Items.Add(string.Format("Rechnung für Tisch:  {0}{1}   Datum:  {2}", Environment.NewLine, DateTime.Now.Date.ToLongDateString()));
                 foreach (var item in restaurantBookings)
                 {
                     listView.Items.Add(item);
+                  //  listBox.Items.Add("Posten:\t" + item.BookingCode + "\t" + item.Multiplicator + " x " + item.Price + " €\t\t" + item.PriceOverall + " €");
                 }
-
+                // listBox.Items.Add(string.Format("Gesamtpreis:\t\t\t\t{0} €", GlobalVariables.PriceComplete));
+                
                 listView.ItemTemplate = CustomPrintTemplate;
+                
 
 
                 if (restaurantBookings.Count > 0)
                 {
 
-                    listView.Header = string.Format("   Rechnung für Tisch: " + GlobalVariables.TableNumber + "{0}   Datum: " + DateTime.Now.Date.ToLongDateString(), Environment.NewLine);
+                    listView.Header = string.Format("   Rechnung für Tisch:\t{0}{1}   Datum:\t\t\t{2}{1}   ==========================================================================================", GlobalVariables.TableNumber,Environment.NewLine,DateTime.Now.ToString("f"));
 
 
 
@@ -168,8 +191,7 @@ namespace BookingApp.Views
                 }
 
 
-
-                // listView.ItemsSource = GlobalVariables.restaurantBookings;
+                
 
                 try
                 {
@@ -195,12 +217,14 @@ namespace BookingApp.Views
             await _printHelper.ShowPrintUIAsync("Rechnung drucken", printHelperOptions);
 
         }
-        private async void PrintHelper_OnPrintSucceeded()
+        /// <summary>
+        /// Function if Printing succeeded. Json serialize bill and save in Database. Delete TableNr row from Database
+        /// </summary>
+        private void PrintHelper_OnPrintSucceeded()
         {
             _printHelper.Dispose();
-
-            var dialog = new MessageDialog("Rechnung gedruckt.");
-            await dialog.ShowAsync();
+            MessageBox.DisplayDialog("OK", "Rechnung gedruckt.");
+    
             GlobalVariables.restaurantBookings.OrderBy(u => u.TableNumber);
 
             string json = JsonConvert.SerializeObject(restaurantBookings);
@@ -210,7 +234,7 @@ namespace BookingApp.Views
             {
                 GlobalVariables.restaurantBookings.Remove(item);
             }
-            string insertAllBookings = "Insert into AllRestaurantBookings (Text, Timestamp) values (@Text, @Timestamp)";
+            string insertAllBookings = "Insert into AllRestaurantBookings (Text, Timestamp, Printed) values (@Text, @Timestamp, @Printed)";
             using (SqlConnection conn = new SqlConnection((App.Current as App).ConnectionString))
             {
                 try
@@ -230,6 +254,7 @@ namespace BookingApp.Views
                         cmd.Parameters.AddWithValue("@Text", json);
 
                         cmd.Parameters.AddWithValue("@Timestamp", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@Printed", 0);
 
 
                         try
@@ -244,71 +269,54 @@ namespace BookingApp.Views
                     }
                 }
                 conn.Close();
+                string deleteTable = "Delete from Tables where Tablenumber=@Tablenumber";
+                try
+                {
+                    conn.Open();
+                }
+                catch (SqlException eSql)
+                {
+                    MessageBox.DisplayDialog("Fehler", eSql.Message);
+                }
+                if (conn.State == System.Data.ConnectionState.Open)
+                {
+                    using (SqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = deleteTable;
 
+                        cmd.Parameters.AddWithValue("@TableNumber", GlobalVariables.TableNumber);
+
+          
+
+
+                        try
+                        {
+                            cmd.ExecuteNonQuery();
+
+                        }
+                        catch (SqlException eSql)
+                        {
+                            MessageBox.DisplayDialog("Fehler", eSql.Message);
+                        }
+                    }
+                }
+                conn.Close();
             }
 
 
             Frame.Navigate(typeof(RestaurantPage));
         }
-    
-
-
-        private async void PrintHelper_OnPrintFailed()
+        /// <summary>
+        /// Function if Printing command failed
+        /// </summary>
+        private void PrintHelper_OnPrintFailed()
         {
             _printHelper.Dispose();
-            var dialog = new MessageDialog("Rechnung konnte nicht gedruckt werden.");
-            await dialog.ShowAsync();
-        }
-        DependencyObject FindElementInItemsControlItemAtIndex(ItemsControl itemsControl,
-                                                                int itemOfIndexToFind,
-                                                                string nameOfControlToFind)
-        {
-            if (itemOfIndexToFind >= itemsControl.Items.Count) return null;
-
-            DependencyObject depObj = null;
-            object o = itemsControl.Items[itemOfIndexToFind];
-            if (o != null)
-            {
-                var item = itemsControl.ContainerFromItem(o);
-                if (item != null)
-                {
-                    //GridViewItem it = item as GridViewItem;
-                    //var i = it.FindName(nameOfControlToFind);
-                    depObj = GetVisualTreeChild(item, nameOfControlToFind);
-                    return depObj;
-                }
-            }
-            return null;
+            MessageBox.DisplayDialog("Fehler", "Rechnung konnte nicht gedruckt werden.");
+      
         }
 
-        DependencyObject GetVisualTreeChild(DependencyObject obj, String name)
-        {
-            DependencyObject dependencyObject = null;
-            int childrenCount = VisualTreeHelper.GetChildrenCount(obj);
-            for (int i = 0; i < childrenCount; i++)
-            {
-                var oChild = VisualTreeHelper.GetChild(obj, i);
-                var childElement = oChild as FrameworkElement;
-                if (childElement != null)
-                {
-                    //Code to take care of Paragraph/Run
-                    if (childElement is RichTextBlock || childElement is TextBlock)
-                    {
-                        dependencyObject = childElement.FindName(name) as DependencyObject;
-                        if (dependencyObject != null)
-                            return dependencyObject;
-                    }
+     
 
-                    if (childElement.Name == name)
-                    {
-                        return childElement;
-                    }
-                }
-                dependencyObject = GetVisualTreeChild(oChild, name);
-                if (dependencyObject != null)
-                    return dependencyObject;
-            }
-            return dependencyObject;
-        }
     }
 }

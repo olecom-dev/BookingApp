@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    Loaded="Page_Loaded"
     
     
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -18,11 +19,86 @@
         </TransitionCollection>
     </Page.Transitions>
     <Page.Resources>
+        <Style TargetType="ListView" x:Key="FixedHeaderListViewStyle">
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="TabNavigation" Value="Once" />
+            <Setter Property="IsSwipeEnabled" Value="True" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+            <Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="False" />
+            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Enabled" />
+            <Setter Property="ScrollViewer.IsVerticalRailEnabled" Value="True" />
+            <Setter Property="ScrollViewer.ZoomMode" Value="Disabled" />
+            <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+            <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True" />
+            <Setter Property="UseSystemFocusVisuals" Value="True" />
+            <Setter Property="ItemContainerTransitions">
+                <Setter.Value>
+                    <TransitionCollection>
+                        <AddDeleteThemeTransition />
+                        <ContentThemeTransition />
+                        <ReorderThemeTransition />
+                        <EntranceThemeTransition IsStaggeringEnabled="False" />
+                    </TransitionCollection>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListView">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                            Background="{TemplateBinding Background}" 
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
 
+                                <ContentControl Content="{TemplateBinding Header}"
+                                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                ContentTransitions="{TemplateBinding HeaderTransitions}"/>
+
+                                <ScrollViewer x:Name="ScrollViewer"
+                                          Grid.Row="1"
+                                        TabNavigation="{TemplateBinding TabNavigation}"
+                                        HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                        IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}"
+                                        VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                        IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}"
+                                        IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+                                        IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+                                        ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}"
+                                        IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                        BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
+                                        AutomationProperties.AccessibilityView="Raw">
+                                    <ItemsPresenter 
+                                                Footer="{TemplateBinding Footer}"
+                                                FooterTemplate="{TemplateBinding FooterTemplate}"
+                                                FooterTransitions="{TemplateBinding FooterTransitions}"
+                                               Padding="{TemplateBinding Padding}" />
+                                </ScrollViewer>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
-    <Grid>
+    <Grid ScrollViewer.VerticalScrollBarVisibility="Visible"
+          ScrollViewer.IsVerticalRailEnabled="True"
+          ScrollViewer.VerticalScrollMode="Auto">
 
-        <ListView Name="CustomerList" 
+            <ListView Name="CustomerList" 
                   ContainerContentChanging="ListView_ContainerContentChanging"
                   HorizontalAlignment="Left"
                   SelectionMode="Single"
@@ -38,6 +114,9 @@
                   Margin="20,450,10,20" 
                   AllowDrop="True"
                   CanReorderItems="True"
+                  Height="390"
+                  Style="{StaticResource FixedHeaderListViewStyle}"
+                      SelectedValuePath="CustomerID"
                  
                   
                  
@@ -65,7 +144,25 @@
 
                         <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Ort" Grid.Column="4" BorderThickness="0" Click="BtnCity_Click"/>
                         <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="PLZ" Grid.Column="5" BorderThickness="0"  Click="BtnPostalcode_Click"/>
+                        <ComboBox Name="CmbSort"  Padding="0" Background="DarkRed" BorderThickness="0" Grid.Column="6" PlaceholderText="Sortierung" PlaceholderForeground="Snow" IsSynchronizedWithCurrentItem="False" Foreground="Snow" Width="200" Height="60" Style="{StaticResource MyComboBoxStyle}"   >
 
+                            <ComboBoxItem  Background="DarkRed" Height="60" Foreground="Snow" Style="{StaticResource MyComboBoxItemStyle}" >
+                                <StackPanel Orientation="Horizontal">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70E;"></FontIcon>
+                                    <TextBlock Margin="10,0,0,0" Text="(A-Z) Aufsteigend" ></TextBlock>
+                                </StackPanel>
+
+
+
+
+                            </ComboBoxItem>
+                            <ComboBoxItem  Background="DarkRed" Foreground="Snow" Height="60" Style="{StaticResource MyComboBoxItemStyle}">
+                                <StackPanel Orientation="Horizontal">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70D;"></FontIcon>
+                                    <TextBlock  Margin="10,0,0,0" Text="(Z-A) Absteigend" ></TextBlock>
+                                </StackPanel>
+                            </ComboBoxItem>
+                        </ComboBox>
 
 
                     </Grid>
@@ -90,33 +187,18 @@
                         <TextBlock Text="{Binding Postalcode}" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
 
 
+ 
+        
+
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        
-            <ComboBox x:Name="CmbSort"  Padding="0" Background="DarkRed" BorderThickness="0" Margin="1120,450,0,0" PlaceholderText="Sortierung" PlaceholderForeground="Snow" IsSynchronizedWithCurrentItem="False" Foreground="Snow" Width="200" Height="60" Style="{StaticResource MyComboBoxStyle}"  >
 
-            <ComboBoxItem  Background="DarkRed" Height="60" Foreground="Snow" Style="{StaticResource MyComboBoxItemStyle}" >
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70E;"></FontIcon>
-                    <TextBlock Margin="10,0,0,0" Text="(A-Z) Aufsteigend" ></TextBlock>
-                </StackPanel>
-              
-                
-
-
-            </ComboBoxItem>
-            <ComboBoxItem  Background="DarkRed" Foreground="Snow" Height="60" Style="{StaticResource MyComboBoxItemStyle}">
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70D;"></FontIcon>
-                    <TextBlock  Margin="10,0,0,0" Text="(Z-A) Absteigend" ></TextBlock>
-                </StackPanel>
-            </ComboBoxItem>
-        </ComboBox>
-       
         <RelativePanel Margin="10,0,0,0" Name="CustomerPanel">
-            <Grid Padding="10">
+           
+
+                <Grid Padding="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"></ColumnDefinition>
                     <ColumnDefinition Width="320"></ColumnDefinition>
@@ -133,9 +215,10 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-
-                <TextBlock Text="ID" Grid.Column="0" Margin="10" Grid.Row="0"></TextBlock>
+                    <TextBlock Text="ID" Grid.Column="0" Margin="10" Grid.Row="0"></TextBlock>
                 <TextBox Name="TboxCustomerID" Margin="10"  Grid.Column="1" Grid.Row="0"></TextBox>
                 <TextBlock Text="Name" Margin="10" Grid.Column="0" Grid.Row="1"></TextBlock>
                 <TextBox Name="TboxLastname" Margin="10" Grid.Column="1" Grid.Row="1"></TextBox>
@@ -162,6 +245,12 @@
                 <TextBox Name="TboxPassport" Margin="10" Grid.Column="3" Grid.Row="3"></TextBox>
                 <Button Style="{StaticResource MyButtonStyle}" Name="ButtonNew" Margin="10" Width="300" Grid.Column="3" Grid.Row="4" Content="Neuer Kunde" Click="ButtonNew_Click"></Button>
                 <Button Style="{StaticResource MyButtonStyle}" Name="ButtonSave" Margin="10" Width="300" Grid.Column="3" Grid.Row="5" Content="Speichern" Click="ButtonSave_Click"></Button>
+
+                
+
+                <ComboBox Name="cboxCustomer"  HorizontalAlignment="Stretch" Grid.Column="3" Grid.Row="11" Margin="10" VerticalAlignment="Center" Header="Namensauswahl" SelectionChanged="CboxCustomers_SelectionChanged"></ComboBox>
+            <AutoSuggestBox x:Name="txtAutoComplete" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="11" Margin="10" VerticalAlignment="Center" Header="Nachname" PlaceholderText="Namen finden..."   QueryIcon="Find" QuerySubmitted="TxtAutoComplete_QuerySubmitted" TextChanged="TxtAutoComplete_TextChanged" SuggestionChosen="TxtAutoComplete_SuggestionChosen" IsEnabled="True" />
+        
             </Grid>
         </RelativePanel>
     </Grid>

@@ -4,18 +4,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BookingApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:classes="using:BookingApp.Classes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:classes="using:BookingApp.Classes"  
     mc:Ignorable="d"
     Loaded="RestaurantPage_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Transitions>
         <TransitionCollection>
-            <EdgeUIThemeTransition Edge="Left">
+            <EdgeUIThemeTransition Edge="Left" >
             </EdgeUIThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
   
     <Grid>
+       
         <StackPanel>
         <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
             <StackPanel Orientation="Vertical">
@@ -102,8 +103,10 @@
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
+                
             <StackPanel Orientation="Vertical" Margin="60,0,0,0">
-                <ListView Name="TablesList" 
+
+                    <ListView Name="TablesList" 
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top"
                   SelectionMode="Single"
@@ -114,7 +117,7 @@
                   ScrollViewer.HorizontalScrollMode="Enabled"
                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
                   ScrollViewer.IsHorizontalRailEnabled="True"
-                   
+                  
                   Height="400"
                
                       >
@@ -122,7 +125,7 @@
                         <DataTemplate>
                             <Grid  Background="DarkRed" >
                                 <Grid.ColumnDefinitions >
-                                    <ColumnDefinition Width="50"  />
+                                    
                                     <ColumnDefinition Width="120"/>
                                     <ColumnDefinition Width="200"/>
                                  
@@ -131,9 +134,9 @@
 
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Margin="10" Foreground="White" FontSize="14" TextAlignment="Center"  VerticalAlignment="Center" Text="ID" Grid.Column="0"  Style="{ThemeResource CaptionTextBlockStyle}"/>
-                                <TextBlock Margin="10" Foreground="White" FontSize="14" TextAlignment="Center" VerticalAlignment="Center" Text="Tischnummer" Grid.Column="1" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                                <TextBlock Margin="10"  Foreground="White" FontSize="14" TextAlignment="Center" VerticalAlignment="Center" Text="Tischstandort" Grid.Column="2" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                              
+                                <TextBlock Margin="10" Foreground="White" FontSize="14" TextAlignment="Center" VerticalAlignment="Center" Text="Tischnummer" Grid.Column="0" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                <TextBlock Margin="10"  Foreground="White" FontSize="14" TextAlignment="Center" VerticalAlignment="Center" Text="Tischstandort" Grid.Column="1" Style="{ThemeResource CaptionTextBlockStyle}"/>
                          
 
 
@@ -144,15 +147,15 @@
                         <DataTemplate x:Name="TablesDataTemplate" x:DataType="classes:Table" >
                             <Grid Height="Auto" AutomationProperties.Name="{Binding TableID}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                    
                                     <ColumnDefinition Width="120"></ColumnDefinition>
                                     <ColumnDefinition Width="200"></ColumnDefinition>
                                    
 
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding TableID}" Grid.Column="0"  Margin="10" VerticalAlignment="Center" TextAlignment="Center"  Style="{ThemeResource BodyTextBlockStyle}"/>
-                                <TextBlock Text="{Binding TableNumber}" Grid.Column="1" Margin="10" VerticalAlignment="Center" TextAlignment="Center" Style="{ThemeResource BodyTextBlockStyle}"/>
-                                <TextBlock Text="{Binding Location}" Grid.Column="2" Margin="10" VerticalAlignment="Center" TextAlignment="Center" Style="{ThemeResource BodyTextBlockStyle}"/>
+  
+                                <TextBlock Text="{Binding TableNumber}" Grid.Column="0" Margin="10" VerticalAlignment="Center" TextAlignment="Center" Style="{ThemeResource BodyTextBlockStyle}"/>
+                                <TextBlock Text="{Binding Location}" Grid.Column="1" Margin="10" VerticalAlignment="Center" TextAlignment="Center" Style="{ThemeResource BodyTextBlockStyle}"/>
                      
 
 
@@ -161,7 +164,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
+                
                 <StackPanel BorderThickness="2" BorderBrush="DarkRed">
                     <TextBlock Text="ID" Margin="35,0,0,0"></TextBlock>
                     <TextBox Name="tbTableID" Margin="10" Width="300"></TextBox>
@@ -174,7 +177,17 @@
            
   
             </StackPanel>
+
+                <StackPanel Width="260">
+                    <Button HorizontalAlignment="Stretch"  Margin="30,0,0,0" Height="40" Content="Tisch anlegen" Style="{StaticResource MyButtonStyle}" Click="BtnNewTable_Click"></Button>
+                    <TextBlock Text="Tisch Nr." Margin="30,10,0,0"></TextBlock>
+                    <TextBox x:Name="tboxTableNumber" Margin="30,10,0,0"></TextBox>
+                    <TextBlock Text="Beschreibung" Margin="30,10,0,0"></TextBlock>
+                    <TextBox x:Name="tboxTableDescription" Margin="30,10,0,0" Height="60" TextWrapping="Wrap"></TextBox>
+                </StackPanel>
         </StackPanel>
+    
+            
             <StackPanel Orientation="Horizontal" BorderThickness="2" BorderBrush="DarkRed" Margin="10">
 
             <StackPanel Margin="20">

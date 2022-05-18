@@ -473,7 +473,7 @@ namespace BookingApp
         }
         private void MfiUsers_Click( object sender, RoutedEventArgs e)
         {
-            contentFrame.Navigate(typeof(PrintAllRestaurantBookings));
+            contentFrame.Navigate(typeof(UserAccount));
         }
         private async void MfiUserDate_Click(object sender, RoutedEventArgs e)
         {
@@ -501,6 +501,16 @@ namespace BookingApp
                 CDialog c = new CDialog();
                 await c.ShowAsync();
             }
+            if(p.GetType() == typeof(RestaurantPage))
+            {
+                NewProductDialog npd = new NewProductDialog();
+                await npd.ShowAsync();
+            }
+            if(p.GetType()== typeof(CustomerPage))
+            {
+                Environment.SetEnvironmentVariable("customerID", "-1");
+                contentFrame.Navigate(typeof(CustomerPage));
+            }
         }
         private void MfiUserNew_Click(object sender, RoutedEventArgs e)
         {
@@ -508,7 +518,20 @@ namespace BookingApp
            
             contentFrame.Navigate(typeof(CustomerPage));
         }
-
+        private async void MfiNewProduct_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialogResult cdr = new ContentDialogResult();
+            NewProductDialog npd = new NewProductDialog();
+            cdr = await npd.ShowAsync();
+               if(cdr == ContentDialogResult.Secondary)
+            {
+                contentFrame.Navigate(typeof(RestaurantPage));
+            }
+        }
+        private void MfiBillComplete_Click(object sender, RoutedEventArgs e)
+        {
+            contentFrame.Navigate(typeof(PrintAllRestaurantBookings));
+        }
     }
     
 }

@@ -5,15 +5,15 @@
     xmlns:local="using:BookingApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Loaded="Test"
+    mc:Ignorable="d" Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
         
-        <ListBox x:Name="ListBoxPrint" Margin="0,0,900,0"  Background="Snow"  >
+        <ListBox x:Name="ListBoxPrint" Margin="0,0,900,0"  Background="Transparent"  >
 
         </ListBox>
         <Grid x:Name="Container"></Grid>
-        <Button Content="Abschlag drucken" Click="Btn_Print" Style="{StaticResource MyButtonStyle}" Width="200" Height="44" Margin="750,10,0,0" VerticalAlignment="Top"/>
+        <Button Content="Abschlag drucken" Click="BtnPrint_Click" Style="{StaticResource MyButtonStyle}" Width="200" Height="44" Margin="750,10,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Page>

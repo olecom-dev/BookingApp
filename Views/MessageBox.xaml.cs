@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -20,9 +21,9 @@ namespace BookingApp.Views
     public sealed partial class MessageBox : ContentDialog
     {
         public MessageBox()
-        {
+            {
             this.InitializeComponent();
-        }
+}
        
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
@@ -30,6 +31,7 @@ namespace BookingApp.Views
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            this.Hide();
         }
         public static async void DisplayDialog(string title, string content)
         {
@@ -50,6 +52,8 @@ namespace BookingApp.Views
             };
             await noDialog.ShowAsync();
         }
-    }
+      
+
+}
 }
 

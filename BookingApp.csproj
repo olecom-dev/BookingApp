@@ -128,6 +128,7 @@
     <Compile Include="Classes\Countries.cs" />
     <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\CustomerFullName.cs" />
+    <Compile Include="Classes\DateTimeConverters.cs" />
     <Compile Include="Classes\Encryption.cs" />
     <Compile Include="Classes\GlobalVariables.cs" />
     <Compile Include="Classes\MsgBox.cs" />
@@ -171,6 +172,12 @@
     </Compile>
     <Compile Include="Views\NewDataPage.xaml.cs">
       <DependentUpon>NewDataPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewProductDialog.xaml.cs">
+      <DependentUpon>NewProductDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewTableDialog.xaml.cs">
+      <DependentUpon>NewTableDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PrintAllRestaurantBookings.xaml.cs">
       <DependentUpon>PrintAllRestaurantBookings.xaml</DependentUpon>
@@ -319,6 +326,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NewDataPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewProductDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewTableDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

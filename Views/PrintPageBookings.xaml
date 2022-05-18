@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
 
-
+        <classes:DateTimeConverters x:Key="DateTimeConverter"></classes:DateTimeConverters>
 
 
 
@@ -23,18 +23,19 @@
         <DataTemplate x:Name="CustomPrintTemplate">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Posten:" Width="80"></TextBlock>
-                    <TextBox x:Name="tbBookingCode" Width="60" Text="{Binding BookingCode}"></TextBox>
-                    <TextBlock x:Name="tbBookingName" Width="120" Text="{Binding ProductName}"></TextBlock>
+                    <TextBlock Text="Posten:" Width="80" TextAlignment="Left" Margin="3"></TextBlock>
+                    <TextBox x:Name="tbBookingCode" Width="60" Text="{Binding BookingCode}" BorderThickness="0" ></TextBox>
+                    <TextBlock x:Name="tbBookingName" Width="120" Text="{Binding ProductName}" Margin="3"></TextBlock>
                     <TextBox x:Name="tbMultiplicator" Width="40" Text="{Binding Multiplicator}" BorderThickness="0"></TextBox>
                     <TextBlock x:Name="tbX" Width="30" Text="x" Margin="3"></TextBlock>
-                    <TextBox x:Name="tbPrice" Width="55" Text="{Binding Price}" BorderThickness="0" TextAlignment="Left">
+                    <TextBox x:Name="tbPrice" Width="55" Text="{Binding Price}"  TextAlignment="Left" BorderThickness="0">
                     </TextBox>
                     <TextBlock x:Name="tbEuro" Text="€" Width="30" Margin="3"></TextBlock>
                     
                         <StackPanel Orientation="Horizontal">
                     <TextBox x:Name="tbBookingPriceOverall" Width="55" Text="{Binding PriceOverall}" BorderThickness="0" TextAlignment="Left"></TextBox>
-                        <TextBlock Text="€" Margin="3"></TextBlock>
+                        <TextBlock Text="€" Margin="3" Width="50"></TextBlock>
+                        
                         
                     </StackPanel>
                 </StackPanel>
@@ -48,9 +49,9 @@
     </Page.Resources>
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="506*"/>
-            <ColumnDefinition Width="420*"/>
-            <ColumnDefinition Width="755*"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="330"/>
+            <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="19*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -76,11 +77,16 @@
                
                 <ListView.Footer >
                         <ItemsControl Name="FooterControl"  >
+                        <StackPanel>
+                            <TextBlock Text="  ====================================================================================="></TextBlock>
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="tbPriceCompleteText" Margin="10" Width="420" Text="Gesamtpreis:" />
+                        <TextBlock x:Name="tbPriceCompleteText" Margin="10" Width="430" Text="Gesamtpreis:" />
                            
                         <TextBlock x:Name="tbPriceComplete" Margin="10" />
                             <TextBlock x:Name="tbEuro1" Text="€" Width="30" Margin="10"></TextBlock>
+                            
+                            <TextBlock x:Name="tbDate" Margin="10"></TextBlock>
                         </StackPanel>
                     </ItemsControl>
                 </ListView.Footer>
@@ -90,7 +96,11 @@
 
 
         </Grid>
-        <Button x:Name="BtnPrint" Grid.Column="0" Grid.Row="1" Style="{StaticResource MyButtonStyle}" Click="BtnPrint_Click" Content="Rechnung drucken" Width="200" Margin="10,30,0,0" Height="44" VerticalAlignment="Top"/>
+        <ListView x:Name="ListViewCalculate" Grid.Column="2" Margin="0,53,0,0">
+
+        </ListView>
+       
+            <Button x:Name="BtnPrint" Grid.Column="0" Grid.Row="1" Style="{StaticResource MyButtonStyle}" Click="BtnPrint_Click" Content="Rechnung drucken" Width="200" Margin="10,30,0,0" Height="44" VerticalAlignment="Top"/>
       
         
 

@@ -82,7 +82,12 @@
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
 
-                    <MenuFlyoutItem Text="Abschlag" Name="mfiUsers1" Click="MfiUsers_Click">
+                    <MenuFlyoutItem Text="Abschlag" Name="mfiUsers1" Click="MfiBillComplete_Click">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xEC32;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Neues Produkt" Name="mfiNewProduct" Click="MfiNewProduct_Click">
                         <MenuFlyoutItem.Icon>
                             <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xEC32;" />
                         </MenuFlyoutItem.Icon>
