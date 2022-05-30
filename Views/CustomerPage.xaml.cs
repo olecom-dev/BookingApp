@@ -6,9 +6,12 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -36,12 +39,17 @@ namespace BookingApp.Views
         public CustomerPage()
         {
             this.InitializeComponent();
-            
-            cus = GetCustomers(ConnectionString);
+            cboxBookings.Items.Add("Alle Kunden");
+            cboxBookings.Items.Add("Aktuelle Buchungen");
+            cboxBookings.Items.Add("Reservierungen");
+            cboxBookings.Items.Add("Vergangene Buchungen");
+            cboxBookings.SelectedIndex = 0;
+            cus = GetCustomers(ConnectionString, cboxBookings.SelectedIndex);
             cus = new List<Customer>(cus.OrderBy(i => i.Lastname));
             country = GetCountries(ConnectionString);
             
             this.TboxCustomerID.Text = cus[0].CustomerID.ToString();
+            this.TboxCustomerCode.Text = cus[0].CustomerCode;
             this.TboxLastname.Text = cus[0].Lastname;
             this.TboxFirstname.Text = cus[0].Firstname;
             this.TboxAddress.Text = cus[0].Address;
@@ -58,17 +66,18 @@ namespace BookingApp.Views
             this.TboxPassport.Text = cus[0].Passport;
             
             this.CustomerList.ItemsSource = cus;
-      
-
-
-
             
            
-     
 
-            
- 
-        
+
+
+
+
+
+
+
+
+
 
 
         }
@@ -85,6 +94,7 @@ namespace BookingApp.Views
             else
             {
                 //  ControlsEnabled(false);
+                TboxCustomerCode.IsEnabled = false;
                 TboxCustomerID.IsEnabled = false;
                 TboxLastname.IsEnabled = false;
                 TboxFirstname.IsEnabled = false;
@@ -109,7 +119,7 @@ namespace BookingApp.Views
                 }
                 //   CmbSort = (ComboBox)CustomerList.FindName("CmbSort");
                 //  CmbSort = (ComboBox)_Children.Find(c => c.Name == _Name);
-
+             
             }
         }
         private static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
@@ -142,22 +152,22 @@ namespace BookingApp.Views
         }
 
 
-        public void BtnID_Click(object sender, RoutedEventArgs e)
+        public void BtnCode_Click(object sender, RoutedEventArgs e)
         {
             if(CmbSort.SelectedIndex==0)
            
-                this.CustomerList.ItemsSource = cus.OrderBy(i => i.CustomerID);
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderBy(i => i.CustomerCode);
             else
-                this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.CustomerID);
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderByDescending(i => i.CustomerCode);
         }
         public void BtnLastname_Click(object sender, RoutedEventArgs e)
         {
 
             if (CmbSort.SelectedIndex == 0)
 
-                this.CustomerList.ItemsSource = cus.OrderBy(i => i.Lastname);
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderBy(i => i.Lastname);
             else
-                this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.Lastname);
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderByDescending(i => i.Lastname);
 
         }
         public void BtnFirstname_Click(object sender, RoutedEventArgs e)
@@ -165,9 +175,9 @@ namespace BookingApp.Views
 
             if (CmbSort.SelectedIndex == 0)
 
-                this.CustomerList.ItemsSource = cus.OrderBy(i => i.Firstname);
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderBy(i => i.Firstname);
             else
-                this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.Firstname);
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderByDescending(i => i.Firstname);
 
         }
         public void BtnAdress_Click(object sender, RoutedEventArgs e)
@@ -175,9 +185,9 @@ namespace BookingApp.Views
 
             if (CmbSort.SelectedIndex == 0)
 
-                this.CustomerList.ItemsSource = cus.OrderBy(i => i.Address);
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderBy(i => i.Address);
             else
-                this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.Address);
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderByDescending(i => i.Address);
 
         }
         public void BtnCity_Click(object sender, RoutedEventArgs e)
@@ -185,9 +195,9 @@ namespace BookingApp.Views
 
             if (CmbSort.SelectedIndex == 0)
 
-                this.CustomerList.ItemsSource = cus.OrderBy(i => i.City);
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderBy(i => i.City);
             else
-                this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.City);
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderByDescending(i => i.City);
 
         }
         public void BtnPostalcode_Click(object sender, RoutedEventArgs e)
@@ -195,10 +205,26 @@ namespace BookingApp.Views
 
             if (CmbSort.SelectedIndex == 0)
 
-                this.CustomerList.ItemsSource = cus.OrderBy(i => i.Postalcode);
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderBy(i => i.Postalcode);
             else
-                this.CustomerList.ItemsSource = cus.OrderByDescending(i => i.Postalcode);
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderByDescending(i => i.Postalcode);
 
+        }
+        private void BtnStartDate_Click(object sender, RoutedEventArgs e)
+        {
+            if (CmbSort.SelectedIndex == 0)
+
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderBy(i => i.StartDate);
+            else
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderByDescending(i => i.StartDate);
+        }
+        private void BtnEndDate_Click(object sender, RoutedEventArgs e)
+        {
+            if (CmbSort.SelectedIndex == 0)
+
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderBy(i => i.EndDate);
+            else
+                this.CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex).OrderByDescending(i => i.EndDate);
         }
         void ListView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
         {
@@ -212,11 +238,24 @@ namespace BookingApp.Views
                 args.ItemContainer.Background = new SolidColorBrush(Colors.LightSalmon);
             }
         }
-        public List<Customer> GetCustomers(string connectionString ) {
-
-           
-            
-                const string GetCustomersQuery = "Select * from dbo.Customer";
+        public List<Customer> GetCustomers(string connectionString, int index ) {
+            string GetCustomersQuery = "";
+            if (index == 0)
+            {
+                GetCustomersQuery = "Select * From Customer";
+            }
+            else if (index==1)
+            {
+                GetCustomersQuery = "Select Customer.*, Booking.ID, Booking.StartDate, Booking.EndDate from dbo.Customer  inner join Booking on Customer.CustomerID=Booking.CustomerID Where Booking.StartDate<@StartDate And Booking.EndDate>@EndDate";
+            }
+            else if (index==2)
+            {
+                GetCustomersQuery = "Select Customer.*, Booking.ID, Booking.StartDate, Booking.EndDate from dbo.Customer  inner join Booking on Customer.CustomerID=Booking.CustomerID where Booking.StartDate>@StartDate And Booking.EndDate>@EndDate";
+            }
+            else if (index == 3)
+            {
+                GetCustomersQuery = "Select Customer.*, Booking.ID, Booking.StartDate, Booking.EndDate from dbo.Customer  inner join Booking on Customer.CustomerID=Booking.CustomerID where Booking.EndDate<@EndDate and Booking.StartDate<@StartDate";
+            }
             var customers = new List<Customer>();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -235,6 +274,11 @@ namespace BookingApp.Views
                     using (SqlCommand cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = GetCustomersQuery;
+                        if (index > 0)
+                        {
+                            cmd.Parameters.AddWithValue("@StartDate", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@EndDate", DateTime.Now);
+                        }
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
@@ -259,6 +303,18 @@ namespace BookingApp.Views
                                     customer.MobilePhone = reader.GetString(10);
                                 if (!reader.IsDBNull(11))
                                     customer.Passport = reader.GetString(11);
+                                if (!reader.IsDBNull(12))
+                                    customer.CustomerCode = reader.GetString(12);
+                                if (cboxBookings.SelectedIndex > 0)
+                                    {
+                                       
+                                        if (!reader.IsDBNull(13))
+                                            customer.BookingID = reader.GetInt32(13);
+                                        if (!reader.IsDBNull(14))
+                                            customer.StartDate = reader.GetDateTime(14);
+                                        if (!reader.IsDBNull(15))
+                                            customer.EndDate = reader.GetDateTime(15);
+                                    }
                                 customers.Add(customer);
                             }
                             return customers;
@@ -274,7 +330,7 @@ namespace BookingApp.Views
         }
         public List<Countries> GetCountries(string connectionString)
         {
-            const string getCountriesQuery = "Select Countrycode, Countryname from Countries";
+            const string getCountriesQuery = "Select * from Countries";
             var countries = new List<Countries>();
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -298,7 +354,8 @@ namespace BookingApp.Views
                                 var country = new Countries
                                 {
                                     Countrycode = reader.GetString(0),
-                                    Countryname = reader.GetString(1)
+                                    Countryname = reader.GetString(1),
+                                    CountryNameInternational = reader.GetString(2)
                                 };
                                 countries.Add(country);
                             }
@@ -324,6 +381,7 @@ namespace BookingApp.Views
             if (CustomerList.SelectedIndex > -1) {
                 int customerID = (int)CustomerList.SelectedValue;
                 this.TboxCustomerID.Text = customerID.ToString();
+                this.TboxCustomerCode.Text = cus.Where(i => i.CustomerID == customerID).First().CustomerCode;
                 this.TboxLastname.Text = cus.Where(i => i.CustomerID == customerID).First().Lastname;                                   
                 this.TboxFirstname.Text = cus.Where(i => i.CustomerID == customerID).First().Firstname;
                 this.TboxAddress.Text = cus.Where(i => i.CustomerID == customerID).First().Address;
@@ -378,12 +436,15 @@ namespace BookingApp.Views
         {
             ControlsEnabled(true);
             ControlsEmpty();
+            TboxCustomerCode.IsEnabled = false;
         }
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-           
-                    string insertCustomer = "Insert into Customer (Lastname, Firstname, Address, City, Postalcode, Countrycode, E_Mail, DateOfBirth, Phone, MobilePhone, Passport)" +
-                                            "values (@Lastname, @Firstname, @Address, @City, @Postalcode, @Countrycode, @E_Mail, @DateOfBirth, @Phone, @MobilePhone, @Passport);";
+            string customerCode = "K" + Regex.Replace(CDPDateOfBirth.SelectedDate.ToString(), @"\w", String.Empty) + TboxCustomerID.Text;
+            Int32 lastInsertedID = 0;
+
+            string insertCustomer = "Insert into Customer (Lastname, Firstname, Address, City, Postalcode, Countrycode, E_Mail, DateOfBirth, Phone, MobilePhone, Passport, CustomerCode) Output Inserted.CustomerID"+
+                                            "values (@Lastname, @Firstname, @Address, @City, @Postalcode, @Countrycode, @E_Mail, @DateOfBirth, @Phone, @MobilePhone, @Passport, @CustomerCode);";
                     using (SqlConnection conn = new SqlConnection((App.Current as App).ConnectionString))
                     {
                         try
@@ -410,12 +471,13 @@ namespace BookingApp.Views
                         cmd.Parameters.AddWithValue("@Phone", TboxPhone.Text);
                         cmd.Parameters.AddWithValue("@MobilePhone", TboxMobilePhone.Text);
                         cmd.Parameters.AddWithValue("@Passport", TboxPassport.Text);
+                        cmd.Parameters.AddWithValue("@CustomerCode", customerCode);
 
                         try
                         {
                             if (TboxLastname.Text != String.Empty && TboxFirstname.Text != String.Empty && TboxAddress.Text != String.Empty && TboxCity.Text != String.Empty)
                             {
-                                cmd.ExecuteNonQuery();
+                                lastInsertedID =  (Int32)cmd.ExecuteScalar();
                             }
                             else
                             {
@@ -493,6 +555,168 @@ namespace BookingApp.Views
             CboxCountry.SelectedIndex = 0;
             CDPDateOfBirth.Date = DateTime.Now.Date;
         }
+        public List<Booking> GetBookings(string connectionString)
+        {
+            const string getBookingsQuery = "Select * from Booking";
+            var bookings = new List<Booking>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                }
+                catch (SqlException eSql)
+                {
+                    MessageBox.DisplayDialog("Fehler", eSql.Message);
+                }
+                if (conn.State == System.Data.ConnectionState.Open)
+                {
+                    using (SqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = getBookingsQuery;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var booking = new Booking
+                                {
+                                    BookingID = reader.GetInt32(0),
+                                    CustomerID = reader.GetInt32(1),
+                                    RoomID = reader.GetInt32(2),
+                                    StartDate = reader.GetDateTime(3),
+                                    EndDate = reader.GetDateTime(4),
+                                    PriceOverAll = reader.GetDecimal(5),
+                                    PriceOverAllWithoutTax = reader.GetDecimal(6),
+                                    Printed = reader.GetBoolean(7),
+                                    Timestamp = reader.GetDateTime(8),
+                             
+                                        
+                                    
+                                };
+                                bookings.Add(booking);
+                            }
+                            return bookings;
 
+                        }
+                    }
+
+                }
+
+
+            }
+
+
+
+
+            return null;
+
+        }
+        public   List<Rooms> GetRooms(string connectionString)
+        {
+            const string getRoomsQuery = "Select * from Rooms";
+            var rooms = new List<Rooms>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                }
+                catch (SqlException eSql)
+                {
+                    MessageBox.DisplayDialog("Fehler", eSql.Message);
+                }
+                if (conn.State == System.Data.ConnectionState.Open)
+                {
+                    using (SqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = getRoomsQuery;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var room = new Rooms
+                                {
+                                    ID = reader.GetInt32(0),
+                                    RoomNumber = reader.GetString(1),
+                                    NumberOfBeds = reader.GetInt32(2),
+                                    PricePerNight = reader.GetDecimal(3),
+                                    RoomSize = reader.GetString(4),
+                                    ImageUrl = reader.GetString(5),
+                                    Available = reader.GetBoolean(6),
+                                    SourceImage = (byte[])reader[7],
+                                    Description = reader.GetString(8),
+          //                         Image = await BitmapImageConverter.ConvertByteToImage((byte[])reader[7])
+
+                            };
+                                rooms.Add(room);
+
+                           
+                            }
+                            return rooms;
+
+                        }
+                    }
+
+                }
+
+
+            }
+
+
+
+
+            return null;
+
+        }
+        private  void CustomerList_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            if (cboxBookings.SelectedIndex > 0)
+            {
+                Customer cust = (Customer)(e.OriginalSource as FrameworkElement).DataContext;
+                if (cust != null)
+                {
+
+                    int bookingID = cust.BookingID;
+                    //   List<Rooms> rooms = GetRooms(ConnectionString).Result;
+                    Environment.SetEnvironmentVariable("bookingID", bookingID.ToString());
+
+                    Booking allCustomerBookings = (Booking)(from c in cus
+                                                            join co in GetCountries(ConnectionString) on c.Countrycode equals co.Countrycode
+                                                            join b in GetBookings(ConnectionString) on c.CustomerID equals b.CustomerID
+                                                            join r in GetRooms(ConnectionString) on b.RoomID equals r.ID
+                                                            select new Booking
+                                                            {
+                                                                CustomerID = c.CustomerID,
+                                                                BookingID = b.BookingID,
+                                                                RoomID = r.ID,
+                                                                Firstname = c.Firstname,
+                                                                Lastname = c.Lastname,
+                                                                Address = c.Address,
+                                                                City = c.City,
+                                                                PostalCode = c.Postalcode,
+                                                                CountryNameInternational = co.CountryNameInternational,
+                                                                StartDate = b.StartDate,
+                                                                EndDate = b.EndDate,
+                                                                PricePerNight = r.PricePerNight,
+                                                                PriceOverAll = b.PriceOverAll,
+                                                                PriceOverAllWithoutTax = b.PriceOverAllWithoutTax,
+                                                                Printed = b.Printed,
+                                                                RoomNumber = r.RoomNumber,
+                                                                Image = r.Image,
+                                                                CustomerCode = c.CustomerCode,
+                                                                Timestamp = b.Timestamp,
+                                                                ImageUrl = r.ImageUrl,
+
+
+                                                            }).ToList().Where(i => i.BookingID == bookingID).First();
+                    Environment.SetEnvironmentVariable("printed", allCustomerBookings.Printed.ToString());
+                    Frame.Navigate(typeof(PrintHotelBookingsPage), allCustomerBookings);
+                }
+            }
+        }
+        private void CboxBookings_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CustomerList.ItemsSource = GetCustomers(ConnectionString, cboxBookings.SelectedIndex);
+        }
     }
 }

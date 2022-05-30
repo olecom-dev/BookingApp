@@ -26,14 +26,21 @@ namespace BookingApp.Classes
             {
                 try
                 {
-                    result = timeSpan.ToString((string)parameter);
+                    if (timeSpan == DateTime.MinValue)
+                    {
+                        result = "";
+                    }
+                    else
+                    {
+                        result = timeSpan.ToString((string)parameter);
+                    }
                 }
                 catch (Exception e)
                 {
                     result = "";
                 }
             }
-
+            
             return result;
         }
 

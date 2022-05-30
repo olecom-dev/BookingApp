@@ -9,6 +9,7 @@ namespace BookingApp.Classes
     public class Countries
     {
         public string Countrycode { get; set; }
+        public string CountryNameInternational { get; set; }
         public string Countryname { get; set; }
     }
 }

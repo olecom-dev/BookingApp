@@ -38,6 +38,7 @@ namespace BookingApp.Views
         public NewDataPage()
         {
             this.InitializeComponent();
+         
         }
         private async void NewDataPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -64,7 +65,7 @@ namespace BookingApp.Views
             }
             else
             {
-                query = "Insert into Rooms (RoomNumber, NumberOfBeds, PricePerNight, RoomSize, Image, Available, ImageUrl, Description) values (@RoomNumber, @NumberOfBeds, @PricePerNight, @RoomSize, @Image, @Available, @ImageURL, @Description)";
+                query = "Insert into Rooms (RoomNumber, NumberOfBeds, PricePerNight, RoomSize, Image, Available, ImageUrl, Description, Printed) values (@RoomNumber, @NumberOfBeds, @PricePerNight, @RoomSize, @Image, @Available, @ImageURL, @Description)";
             }
             if (fileBytes != null || tbRoomNumber.Text != "" || tbNumberOfBeds.Text != "" || tbPricePerNight.Text != "" || tbRoomSize.Text != "")
             {
@@ -77,10 +78,11 @@ namespace BookingApp.Views
                 cmd.Parameters.AddWithValue("@RoomSize", Int32.Parse(tbRoomSize.Text));
                 cmd.Parameters.AddWithValue("@Available", true);
                 cmd.Parameters.AddWithValue("@Description", tbDescription.Text);
+                
                 if (file != null)
                 {
                     cmd.Parameters.AddWithValue("@Image", fileBytes);
-                    cmd.Parameters.AddWithValue("@ImageURL", file.Path);
+                    cmd.Parameters.AddWithValue("@ImageURL", file.Name);
                 }
                 
                 try

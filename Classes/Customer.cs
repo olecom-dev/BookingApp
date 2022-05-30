@@ -21,6 +21,11 @@ namespace BookingApp.Classes
         public string Phone { get; set; }
         public string MobilePhone { get; set; }
         public string Passport { get; set; }
+        public string CustomerCode { get; set; }
+        public int BookingID { get; set; }
+        public int RoomID { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
 
     }

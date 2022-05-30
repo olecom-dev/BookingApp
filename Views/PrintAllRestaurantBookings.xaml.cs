@@ -59,7 +59,7 @@ namespace BookingApp.Views
         public PrintAllRestaurantBookings()
         {
             this.InitializeComponent();
-
+           
 
 
 
@@ -379,7 +379,6 @@ namespace BookingApp.Views
 
             }
 
-            
             Frame.Navigate(typeof(RestaurantPage));
         }
     }

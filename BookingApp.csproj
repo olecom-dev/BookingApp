@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\AllRestaurantBookings.cs" />
+    <Compile Include="Classes\Bills.cs" />
     <Compile Include="Classes\BitmapImageConverter.cs" />
     <Compile Include="Classes\Booking.cs" />
     <Compile Include="Classes\BookingCodes.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Classes\Products.cs" />
     <Compile Include="Classes\RestaurantBooking.cs" />
     <Compile Include="Classes\Rooms.cs" />
+    <Compile Include="Classes\StringFormatConverter.cs" />
     <Compile Include="Classes\Table.cs" />
     <Compile Include="Classes\User.cs" />
     <Compile Include="Classes\Validation.cs" />
@@ -179,8 +181,20 @@
     <Compile Include="Views\NewTableDialog.xaml.cs">
       <DependentUpon>NewTableDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PeintBookingsDialog.xaml.cs">
+      <DependentUpon>PeintBookingsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PrintAllRestaurantBookings.xaml.cs">
       <DependentUpon>PrintAllRestaurantBookings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintBookingsDialog.xaml.cs">
+      <DependentUpon>PrintBookingsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintEverythingPage.xaml.cs">
+      <DependentUpon>PrintEverythingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintHotelBookingsPage.xaml.cs">
+      <DependentUpon>PrintHotelBookingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PrintPageBookings.xaml.cs">
       <DependentUpon>PrintPageBookings.xaml</DependentUpon>
@@ -337,9 +351,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PeintBookingsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PrintAllRestaurantBookings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintBookingsDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PrintEverythingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintHotelBookingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PrintPageBookings.xaml">
       <SubType>Designer</SubType>

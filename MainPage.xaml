@@ -20,8 +20,13 @@
 
 
     </Page.Resources>
-
     <Grid>
+
+
+
+
+
+
 
 
 
@@ -127,11 +132,11 @@ ItemInvoked="NavView_ItemInvoked"
  Loaded="NavView_Loaded" Grid.RowSpan="2" 
           
                             >
+  
 
 
 
-
-            <controls:NavigationView.Resources>
+                <controls:NavigationView.Resources>
                 <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="DarkRed"/>
                 <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="DarkRed" />
                 <SolidColorBrush x:Key="NavigationViewItemForeground" Color="Snow"/>

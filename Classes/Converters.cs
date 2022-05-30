@@ -6,10 +6,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Data;
 
 namespace BookingApp.Classes
 {
-    public static class Converters
+    public static class Converters 
     {
         public static byte[] ObjectToByteArray(Object obj)
         {

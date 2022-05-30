@@ -10,6 +10,7 @@
     Loaded="Page_Loaded"
     
     
+    
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
    >
     <Page.Transitions>
@@ -19,6 +20,7 @@
         </TransitionCollection>
     </Page.Transitions>
     <Page.Resources>
+        <classes:DateTimeConverters x:Key="DateTimeConverterKey"></classes:DateTimeConverters>
         <Style TargetType="ListView" x:Key="FixedHeaderListViewStyle">
             <Setter Property="IsTabStop" Value="False" />
             <Setter Property="TabNavigation" Value="Once" />
@@ -97,8 +99,8 @@
     <Grid ScrollViewer.VerticalScrollBarVisibility="Visible"
           ScrollViewer.IsVerticalRailEnabled="True"
           ScrollViewer.VerticalScrollMode="Auto">
-
-            <ListView Name="CustomerList" 
+        
+        <ListView Name="CustomerList" 
                   ContainerContentChanging="ListView_ContainerContentChanging"
                   HorizontalAlignment="Left"
                   SelectionMode="Single"
@@ -117,6 +119,8 @@
                   Height="390"
                   Style="{StaticResource FixedHeaderListViewStyle}"
                       SelectedValuePath="CustomerID"
+                      IsDoubleTapEnabled="True"
+                      DoubleTapped="CustomerList_DoubleTapped"
                  
                   
                  
@@ -126,25 +130,30 @@
                 <DataTemplate>
                     <Grid  Background="DarkRed"  >
                         <Grid.ColumnDefinitions >
-                            <ColumnDefinition Width="100"  />
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="150"  />
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="260"/>
+                            
 
 
                         </Grid.ColumnDefinitions>
 
-                        <Button Style="{StaticResource MyButtonStyle}" Width="100" Height="60"  Foreground="White" FontSize="16"   VerticalAlignment="Center" Content="ID" Grid.Column="0" BorderThickness="0" Click="BtnID_Click"/>
-                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Nachname" Grid.Column="1" BorderThickness="0" Click="BtnLastname_Click" />
-                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Vorname" Grid.Column="2" BorderThickness="0" Click="BtnFirstname_Click" />
-                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Adresse" Grid.Column="3" BorderThickness="0" Click="BtnAdress_Click" />
+                        <Button Style="{StaticResource MyButtonStyle}" Width="150" Height="60"  Foreground="White" FontSize="16" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="Kunden-Nr." Grid.Column="0" BorderThickness="0" Click="BtnCode_Click"/>
+                        <Button Style="{StaticResource MyButtonStyle}" Width="150" Height="60" Foreground="White" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Nachname" Grid.Column="1" BorderThickness="0" Click="BtnLastname_Click" />
+                        <Button Style="{StaticResource MyButtonStyle}" Width="150" Height="60" Foreground="White" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Vorname" Grid.Column="2" BorderThickness="0" Click="BtnFirstname_Click" />
+                        <Button Style="{StaticResource MyButtonStyle}" Width="150" Height="60" Foreground="White" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Adresse" Grid.Column="3" BorderThickness="0" Click="BtnAdress_Click" />
 
-                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="Ort" Grid.Column="4" BorderThickness="0" Click="BtnCity_Click"/>
-                        <Button Style="{StaticResource MyButtonStyle}" Width="200" Height="60" Foreground="White" FontSize="16"  VerticalAlignment="Center" Content="PLZ" Grid.Column="5" BorderThickness="0"  Click="BtnPostalcode_Click"/>
-                        <ComboBox Name="CmbSort"  Padding="0" Background="DarkRed" BorderThickness="0" Grid.Column="6" PlaceholderText="Sortierung" PlaceholderForeground="Snow" IsSynchronizedWithCurrentItem="False" Foreground="Snow" Width="200" Height="60" Style="{StaticResource MyComboBoxStyle}"   >
+                        <Button Style="{StaticResource MyButtonStyle}" Width="150" Height="60" Foreground="White" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Ort" Grid.Column="4" BorderThickness="0" Click="BtnCity_Click"/>
+                        <Button Style="{StaticResource MyButtonStyle}" Width="150" Height="60" Foreground="White" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="PLZ" Grid.Column="5" BorderThickness="0"  Click="BtnPostalcode_Click"/>
+                        <Button Style="{StaticResource MyButtonStyle}" Width="150" Height="60" Foreground="White" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Check In" Grid.Column="6" BorderThickness="0"  Click="BtnStartDate_Click"/>
+                        <Button Style="{StaticResource MyButtonStyle}" Width="150" Height="60" Foreground="White" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Check Out" Grid.Column="7" BorderThickness="0"  Click="BtnEndDate_Click"/>
+                        <ComboBox Name="CmbSort" Margin="40,0,0,0" Padding="0" Background="DarkRed" BorderThickness="0" Grid.Column="8" PlaceholderText="Sortierung" PlaceholderForeground="Snow" IsSynchronizedWithCurrentItem="False" Foreground="Snow" Width="200" Height="60" Style="{StaticResource MyComboBoxStyle}" FontSize="16" HorizontalAlignment="Center" >
 
                             <ComboBoxItem  Background="DarkRed" Height="60" Foreground="Snow" Style="{StaticResource MyComboBoxItemStyle}" >
                                 <StackPanel Orientation="Horizontal">
@@ -172,23 +181,27 @@
                 <DataTemplate x:Name="TableDataTemplate" x:DataType="classes:Customer" >
                     <Grid Height="Auto" AutomationProperties.Name="{Binding CustomerID}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"></ColumnDefinition>
-                            <ColumnDefinition Width="200"></ColumnDefinition>
-                            <ColumnDefinition Width="200"></ColumnDefinition>
-                            <ColumnDefinition Width="200"></ColumnDefinition>
-                            <ColumnDefinition Width="200"></ColumnDefinition>
-                            <ColumnDefinition Width="200"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="240"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding CustomerID}" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Text="{Binding Lastname}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Text="{Binding Firstname}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Text="{Binding Address}" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Text="{Binding City}" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
-                        <TextBlock Text="{Binding Postalcode}" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}"/>
+                        <TextBlock Text="{Binding CustomerCode}" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding Lastname}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding Firstname}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding Address}" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding City}" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding Postalcode}" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding StartDate, Converter={StaticResource DateTimeConverterKey},ConverterParameter='dd.MM.yyyy'}" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding EndDate, Converter={StaticResource DateTimeConverterKey},ConverterParameter='dd.MM.yyyy'}" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" TextAlignment="Center"/>
 
 
- 
-        
+
 
                     </Grid>
                 </DataTemplate>
@@ -200,6 +213,8 @@
 
                 <Grid Padding="10">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition Width="320"></ColumnDefinition>
                     <ColumnDefinition Width="120"></ColumnDefinition>
                     <ColumnDefinition Width="320"></ColumnDefinition>
                     <ColumnDefinition Width="120"></ColumnDefinition>
@@ -218,8 +233,10 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                    <TextBlock Text="ID" Grid.Column="0" Margin="10" Grid.Row="0"></TextBlock>
-                <TextBox Name="TboxCustomerID" Margin="10"  Grid.Column="1" Grid.Row="0"></TextBox>
+                    <TextBlock Text="ID" Grid.Column="0" Margin="10" Grid.Row="0" Visibility="Collapsed"></TextBlock>
+                <TextBox Name="TboxCustomerID" Margin="10"  Grid.Column="1" Grid.Row="0" Visibility="Collapsed"></TextBox>
+                <TextBlock Text="Kundennummer" Grid.Column="0" Margin="10" Grid.Row="0" ></TextBlock>
+                <TextBox Name="TboxCustomerCode" Margin="10"  Grid.Column="1" Grid.Row="0" IsEnabled="False"></TextBox>
                 <TextBlock Text="Name" Margin="10" Grid.Column="0" Grid.Row="1"></TextBlock>
                 <TextBox Name="TboxLastname" Margin="10" Grid.Column="1" Grid.Row="1"></TextBox>
                 <TextBlock Text="Vorname" Margin="10" Grid.Column="0" Grid.Row="2"></TextBlock>
@@ -250,7 +267,7 @@
 
                 <ComboBox Name="cboxCustomer"  HorizontalAlignment="Stretch" Grid.Column="3" Grid.Row="11" Margin="10" VerticalAlignment="Center" Header="Namensauswahl" SelectionChanged="CboxCustomers_SelectionChanged"></ComboBox>
             <AutoSuggestBox x:Name="txtAutoComplete" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="11" Margin="10" VerticalAlignment="Center" Header="Nachname" PlaceholderText="Namen finden..."   QueryIcon="Find" QuerySubmitted="TxtAutoComplete_QuerySubmitted" TextChanged="TxtAutoComplete_TextChanged" SuggestionChosen="TxtAutoComplete_SuggestionChosen" IsEnabled="True" />
-        
+                <ComboBox Name="cboxBookings"  HorizontalAlignment="Stretch" Grid.Column="5" Grid.Row="11" Margin="10" VerticalAlignment="Center" Header="" SelectionChanged="CboxBookings_SelectionChanged"></ComboBox>
             </Grid>
         </RelativePanel>
     </Grid>

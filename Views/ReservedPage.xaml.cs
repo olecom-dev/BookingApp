@@ -423,7 +423,7 @@ namespace BookingApp.Views
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             var priceWithoutTax = Decimal.Parse(tbPriceOverall.Text) - (Decimal.Parse(tbPriceOverall.Text) * Decimal.Parse(taxRate.ToString()) / 100);
-            string insertBooking = "Insert into Booking (CustomerID, RoomID, StartDate, EndDate, PriceOverall, PriceOverAllWithoutTax) Values (@CustomerID, @RoomID, @StartDate, @EndDate, @PriceOverAll, @PriceOverAllWithoutTax);";
+            string insertBooking = "Insert into Booking (CustomerID, RoomID, StartDate, EndDate, PriceOverall, PriceOverAllWithoutTax, Printed, Timestamp) Values (@CustomerID, @RoomID, @StartDate, @EndDate, @PriceOverAll, @PriceOverAllWithoutTax, @Printed, @Timestamp);";
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 try
@@ -445,6 +445,8 @@ namespace BookingApp.Views
                         cmd.Parameters.AddWithValue("@EndDate", dpReservedEnd.Date);
                         cmd.Parameters.AddWithValue("@PriceOverAll", Decimal.Parse(tbPriceOverall.Text));
                         cmd.Parameters.AddWithValue("@PriceOverAllWithoutTax", priceWithoutTax);
+                        cmd.Parameters.AddWithValue("@Printed", false);
+                        cmd.Parameters.AddWithValue("@Timestamp", DateTime.Now);
                         try
                         {
 

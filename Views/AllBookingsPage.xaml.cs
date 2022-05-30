@@ -50,7 +50,7 @@ namespace BookingApp.Views
                 t.FontSize = 16;
                 MyStackPanel.Children.Add(t as UIElement);
                 MyStackPanel.Children.Add(control as UIElement);
-
+               
             }
         }
         private List<Rooms> GetRoomID()

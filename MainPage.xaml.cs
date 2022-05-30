@@ -51,6 +51,7 @@ namespace BookingApp
             GlobalVariables.TaxRate = 7;
 
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) =>
             {
                 
@@ -94,6 +95,8 @@ namespace BookingApp
 
 
         }
+
+
 
         private async  void Page_Loaded(object sender, RoutedEventArgs e)
         {
